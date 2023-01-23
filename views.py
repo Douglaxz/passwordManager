@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, redirect, session, flash, url
 import time
 from datetime import date, timedelta
 from gerenciadorPassword import app, db
-#from models import tb_usuarios, \
+from models import tb_user
 #    tb_tipousuario, \
 #    tb_beneficios, \
 #    tb_areas, \
@@ -35,24 +35,19 @@ from gerenciadorPassword import app, db
     
 
 
-# rota template
-@app.route('/template')
-def index():
-    return render_template('template.html', titulo='Bem vindos')
-
 # rota index
-#@app.route('/')
-#def index():
-#    #if session['usuario_logado'] == None:
-#    #    return redirect(url_for('login',proxima=url_for('novoUsuario')))    
-#    return render_template('index.html', titulo='Bem vindos')
+@app.route('/')
+def index():
+    #if session['usuario_logado'] == None:
+    #    return redirect(url_for('login',proxima=url_for('novoUsuario')))    
+    return render_template('index.html', titulo='Bem vindos')
 
 # rota logout
-#@app.route('/logout', methods = ['GET', 'POST'])
-#def logout():
-#    session['usuario_logado'] = None
-#    flash('logout efetuado com sucesso')
-#    return redirect(url_for('login'))
+@app.route('/logout', methods = ['GET', 'POST'])
+def logout():
+    session['usuario_logado'] = None
+    flash('logout efetuado com sucesso')
+    return redirect(url_for('login'))
 
  #rota para a tela de login
 @app.route('/login')
@@ -63,17 +58,16 @@ def login():
 # rota para autendicar a tela de login
 @app.route('/autenticar', methods = ['GET', 'POST'])
 def autenticar():
-    usuario = tb_usuarios.query.filter_by(login_usuario=request.form['usuario']).first()
+    usuario = tb_user.query.filter_by(login_user=request.form['usuario']).first()
+    
     if usuario:
-        if request.form['senha'] == usuario.senha_usuario:
-            session['usuario_logado'] = usuario.login_usuario
-            session['nomeusuario_logado'] = usuario.nome_usuario
-            session['tipousuario_logado'] = usuario.cod_tipousuario
-            flash(usuario.nome_usuario + ' Usuário logado com sucesso')
-            proximaPagina = request.form['proxima']
-            if proximaPagina == "None":
-                proximaPagina = ''
-            return redirect('/{}'.format(proximaPagina))
+        if request.form['senha'] == usuario.password_user:
+            session['usuario_logado'] = usuario.login_user
+            session['nomeusuario_logado'] = usuario.name_user
+            #session['tipousuario_logado'] = usuario.cod_tipousuario
+            session['tipousuario_logado'] = 1
+            flash(usuario.name_user + ' Usuário logado com sucesso')
+            return redirect('/')
         else:
             flash('Usuário não logado com sucesso')
             return redirect(url_for('login'))

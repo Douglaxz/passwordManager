@@ -18,59 +18,22 @@
   <title>Gerenciamento de Senhas | Password Manager</title>
 </head>
 <header>
-  <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Alterna navegação">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Home <span class="sr-only">(Página atual)</span></a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Configurações
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/area">Áreas</a>
-            <a class="dropdown-item" href="/beneficio">Beneficios</a>
-            <a class="dropdown-item" href="/periodo">Período</a>
-            <a class="dropdown-item" href="/tipolancamento">Tipo Lançamento</a>
-            <a class="dropdown-item" href="/tipousuario">Tipo Usuários</a>
-            <a class="dropdown-item" href="/usuario">Usuários</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/funcionario">Movimentações</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Relatórios
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/relatorioPeriodo">Período</a>
-            <a class="dropdown-item" href="/beneficio">Profissionais</a>
-          </div>
-        </li>                
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout"></a>
-        </li>
-      </ul>
+  <br>
+    <div class="pos-f-t">
+    <div class="collapse" id="navbarToggleExternalContent">
+      <div class="bg-dark p-4">
+        <button type="button" class="btn btn-dark btn-lg" onclick="window.location.href = '/'">home</button>
+        <button type="button" class="btn btn-dark btn-lg">usuarios</button>
+        <button type="button" class="btn btn-dark btn-lg">tipo usuarios</button>
+        <button type="button" class="btn btn-dark btn-lg"  onclick="window.location.href = '/logout'">logout</button>
+      </div>
     </div>
-    <div>
-      <span class="align-middle">
-        <p class="text-white">{{ session['nomeusuario_logado'] }}</p>
-      </span>
-
-    </div>
-  </nav>
+    <nav class="navbar navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Alterna navegação">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+  </div>
 </header>
 
 <body>
