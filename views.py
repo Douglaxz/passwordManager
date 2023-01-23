@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import Flask, render_template, request, redirect, session, flash, url_for, send_from_directory
 import time
 from datetime import date, timedelta
-#from gerenciador import app, db
+from gerenciadorPassword import app, db
 #from models import tb_usuarios, \
 #    tb_tipousuario, \
 #    tb_beneficios, \
@@ -35,6 +35,10 @@ from datetime import date, timedelta
     
 
 
+# rota template
+@app.route('/template')
+def index():
+    return render_template('template.html', titulo='Bem vindos')
 
 # rota index
 #@app.route('/')
@@ -50,32 +54,32 @@ from datetime import date, timedelta
 #    flash('logout efetuado com sucesso')
 #    return redirect(url_for('login'))
 
-# rota para a tela de login
-#@app.route('/login')
-#def login():
-#    proxima = request.args.get('proxima')
-#    return render_template('login.html', proxima=proxima)
+ #rota para a tela de login
+@app.route('/login')
+def login():
+    #proxima = request.args.get('proxima')
+    return render_template('login.html')
 
 # rota para autendicar a tela de login
-#@app.route('/autenticar', methods = ['GET', 'POST'])
-#def autenticar():
-#    usuario = tb_usuarios.query.filter_by(login_usuario=request.form['usuario']).first()
-#    if usuario:
-#        if request.form['senha'] == usuario.senha_usuario:
-#            session['usuario_logado'] = usuario.login_usuario
-#            session['nomeusuario_logado'] = usuario.nome_usuario
-#            session['tipousuario_logado'] = usuario.cod_tipousuario
-#            flash(usuario.nome_usuario + ' Usuário logado com sucesso')
-#            proximaPagina = request.form['proxima']
-#            if proximaPagina == "None":
-#                proximaPagina = ''
-#            return redirect('/{}'.format(proximaPagina))
-#        else:
-#            flash('Usuário não logado com sucesso')
-#            return redirect(url_for('login'))
-#    else:
-#        flash('Usuário não logado com sucesso')
-#        return redirect(url_for('login'))
+@app.route('/autenticar', methods = ['GET', 'POST'])
+def autenticar():
+    usuario = tb_usuarios.query.filter_by(login_usuario=request.form['usuario']).first()
+    if usuario:
+        if request.form['senha'] == usuario.senha_usuario:
+            session['usuario_logado'] = usuario.login_usuario
+            session['nomeusuario_logado'] = usuario.nome_usuario
+            session['tipousuario_logado'] = usuario.cod_tipousuario
+            flash(usuario.nome_usuario + ' Usuário logado com sucesso')
+            proximaPagina = request.form['proxima']
+            if proximaPagina == "None":
+                proximaPagina = ''
+            return redirect('/{}'.format(proximaPagina))
+        else:
+            flash('Usuário não logado com sucesso')
+            return redirect(url_for('login'))
+    else:
+        flash('Usuário não logado com sucesso')
+        return redirect(url_for('login'))
 
 
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -207,7 +211,7 @@ from datetime import date, timedelta
 #    return redirect(url_for('usuario'))    
 
 # rota para upload de fotos de usuário no banco de dados (desativado)
-@app.route('/uploads/<nome_arquivo>')
+#@app.route('/uploads/<nome_arquivo>')
 #def imagem(nome_arquivo):
 #    return send_from_directory('uploads',nome_arquivo)
 
@@ -225,7 +229,7 @@ from datetime import date, timedelta
 #    return render_template('tipousuarios.html', titulo='Tipo Usuários', tiposusuario=tiposusuario, form=form)
 
 # rota index para mostrar pesquisa dos tipo usuários
-@app.route('/tipousuarioPesquisa', methods=['POST',])
+#@app.route('/tipousuarioPesquisa', methods=['POST',])
 #def tipousuarioPesquisa():
 #    page = request.args.get('page', 1, type=int)
 #    form = FormularPesquisa()
@@ -235,7 +239,7 @@ from datetime import date, timedelta
 #    return render_template('tipousuarios.html', titulo='Tipo Usuários' , tiposusuario=tiposusuario, form=form)    
 
 # rota para criar novo formulário usuário 
-@app.route('/novoTipoUsuario')
+#@app.route('/novoTipoUsuario')
 #def novoTipoUsuario():
 #    if session['usuario_logado'] == None:
 #        return redirect(url_for('login',proxima=url_for('novoTipoUsuario')))
@@ -260,7 +264,7 @@ from datetime import date, timedelta
 #    return redirect(url_for('tipousuario'))
 
 # rota para visualizar tipo usuário 
-@app.route('/visualizarTipoUsuario/<int:id>')
+#@app.route('/visualizarTipoUsuario/<int:id>')
 #def visualizarTipoUsuario(id):
 #    if session['usuario_logado'] == None:
 #        return redirect(url_for('login',proxima=url_for('visualizarTipoUsuario')))
@@ -271,7 +275,7 @@ from datetime import date, timedelta
 #    return render_template('visualizarTipoUsuario.html', titulo='Visualizar Tipo Usuário', id=id, form=form)   
 
 # rota para editar formulário tipo usuário 
-@app.route('/editarTipoUsuario/<int:id>')
+#@app.route('/editarTipoUsuario/<int:id>')
 #def editarTipoUsuario(id):
 #    if session['usuario_logado'] == None:
 #        return redirect(url_for('login',proxima=url_for('visualizarTipoUsuario')))

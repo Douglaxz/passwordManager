@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gerenciamento de Equipes</title>
+  <link href="{{ url_for('static',filename='app.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+  
+  <div class="container1">
+    
+        
+        <form method="POST" action="{{url_for('autenticar')}}">
+          <div class="box1">
+            <div class="container box1">
+              <br>
+              <div class="container w-100 p-3 bg-dark">
+                  <div class="row">
+                    <div class="col-lg text-left text-white font-weight-bold">
+                      Login
+                    </div>
+                    
+                  </div>
+                </div>
+                <br>            
+          <input type="hidden" name="proxima" value="{{ proxima }}">
+          <p><label>Usuário:</label> <input class="form-control" type="text" name="usuario" required></p>
+          <p><label>Senha:</label> <input class="form-control" type="password" name="senha" required></p>
+          <p align="center"><button class="btn btn-success" type="submit">Entrar</button></p>
+        </form>
+        <hr style="height:2px; width:100%; border-width:0; color:gray; background-color:gray">
+        
+      </div>
+    </div>
+  </div>
+  
+</body>
+
+</html>
