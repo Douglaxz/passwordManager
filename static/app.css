@@ -43,9 +43,6 @@ figcaption {
     top: 0;
 }
 
-td {
-    text-align: center;
-}
 
 .formularioJogo {
     display: flex;
@@ -59,15 +56,9 @@ td {
     margin-top: 16px
 }
 
-.inputBox {
-    width: 700px;
-}
 
-.inputsJogo {
-    width: 100%;
-    margin-left: 1em;
-    margin-bottom: 1em;
-}
+
+
 
 .container1 {
     width: 100vw;
@@ -215,7 +206,7 @@ table {
     font-size: 1rem;
     height: 24px;
     padding: 10px;
-    width: 750px;
+    width: 150px;
 }
 
 .cards {
@@ -581,6 +572,29 @@ table {
     font-weight: bold;
 }
 
+.boxtitulocombusca {
+    margin: 5px auto;
+    width: 60%; /* Valor da Largura */
+    border-radius: 10px;
+    padding: 5px;
+    line-height: 70px;
+    font-size: 18px;
+    color: #FFF;
+    text-align: center;   
+    font-weight: bold;
+    display: flex;
+}
+
+.boxcentral {
+    margin: 10px auto;
+    width: 60%; /* Valor da Largura */
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px;  
+    line-height: 170%;
+    text-align: left;
+}
 
 footer {
     width: 100%;
@@ -608,10 +622,34 @@ footer {
         justify-content: center;
         border-radius: 10px;
         padding: 5px;
-        line-height: 60px;
+        line-height: 70px;
         font-size: 12px;
         color: #FFF;
         text-align: center;   
         font-weight: bold;
+        display: inline-block;
+    }
+
+    .boxtitulocombusca {
+        margin: 2px;
+        width: 90%; /* Valor da Largura */
+        border-radius: 10px;
+        padding: 5px;
+        line-height: 70px;
+        font-size: 16px;
+        color: #FFF;
+        text-align: center;   
+        font-weight: bold;
+    }    
+
+    .boxcentral {
+        margin: 2px;
+        width: 90%; /* Valor da Largura */
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        padding: 10px;  
+        line-height: 170%;
+        text-align: left;
     }
   }

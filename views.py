@@ -50,7 +50,7 @@ def autenticar():
         if request.form['senha'] == usuario.password_user:
             session['usuario_logado'] = usuario.login_user
             session['nomeusuario_logado'] = usuario.name_user
-            #session['tipousuario_logado'] = usuario.cod_tipousuario
+            session['tipousuario_logado'] = usuario.cod_usertype
             session['tipousuario_logado'] = 1
             flash(usuario.name_user + ' Usuário logado com sucesso')
             return redirect('/')
@@ -142,7 +142,7 @@ def criar():
     if usuario:
         flash ('Usuário já existe')
         return redirect(url_for('index')) 
-    novoUsuario = tb_user(nome_usuario=nome, senha_usuario=senha, status_usuario=status, login_usuario=login, cod_tipousuario=tipousuario)
+    novoUsuario = tb_user(nome_user=nome, senha_user=senha, status_user=status, login_user=login, cod_usertype=tipousuario)
     db.session.add(novoUsuario)
     db.session.commit()
 

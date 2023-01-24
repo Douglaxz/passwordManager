@@ -51,3 +51,20 @@ class FormularioTipoUsuarioVisualizar(FlaskForm):
     salvar = SubmitField('Salvar')    
 
 
+#------------------------------------------------------------------------------------------------------------------------------
+# OUTROS
+#------------------------------------------------------------------------------------------------------------------------------
+#classe de upload de imagem (desativada no momento)
+def recupera_imagem(id):
+    pass
+#    for nome_arquivo in os.listdir(app.config['UPLOAD_PATH']):
+#        if f'foto{id}' in nome_arquivo:
+#            return nome_arquivo
+#    return 'semfoto.png'
+
+#classe de apagar fotos duplicadas de usuarios (desativada no momento)
+def deleta_arquivos(id):
+    pass
+#    arquivo = recupera_imagem(id)
+#    if arquivo != 'semfoto.png':
+#        os.remove(os.path.join(app.config['UPLOAD_PATH'],arquivo))
