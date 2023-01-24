@@ -197,7 +197,7 @@ def tipousuario():
     form = FormularPesquisa()    
     tiposusuario = tb_usertype.query.order_by(tb_usertype.desc_usertype)\
     .paginate(page=page, per_page=5, error_out=False)
-    return render_template('tipousuarios.html', titulo='Tipo Usuários', tiposusuario=tiposusuario, form=form)
+    return render_template('tipousuarios.html', titulo='Tipo Usuário', tiposusuario=tiposusuario, form=form)
 
 # rota index para mostrar pesquisa dos tipo usuários
 @app.route('/tipousuarioPesquisa', methods=['POST',])
@@ -207,7 +207,7 @@ def tipousuarioPesquisa():
     tiposusuario = tb_usertype.query.order_by(tb_usertype.desc_usertype)\
     .filter(tb_usertype.desc_usertype.ilike(f'%{form.pesquisa.data}%'))\
     .paginate(page=page, per_page=5, error_out=False)
-    return render_template('tipousuarios.html', titulo='Tipo Usuários' , tiposusuario=tiposusuario, form=form)    
+    return render_template('tipousuarios.html', titulo='Tipo Usuário' , tiposusuario=tiposusuario, form=form)    
 
 # rota para criar novo formulário usuário 
 @app.route('/novoTipoUsuario')
@@ -241,8 +241,8 @@ def visualizarTipoUsuario(id):
         return redirect(url_for('login',proxima=url_for('visualizarTipoUsuario')))
     tipousuario = tb_usertype.query.filter_by(cod_usertype=id).first()
     form = FormularioTipoUsuarioVisualizar()
-    form.descricao.data = tipousuario.desc_tipousuario
-    form.status.data = tipousuario.status_tipousuario
+    form.descricao.data = tipousuario.desc_usertype
+    form.status.data = tipousuario.status_usertype
     return render_template('visualizarTipoUsuario.html', titulo='Visualizar Tipo Usuário', id=id, form=form)   
 
 # rota para editar formulário tipo usuário 
@@ -263,8 +263,8 @@ def atualizarTipoUsuario():
     if form.validate_on_submit():
         id = request.form['id']
         tipousuario = tb_usertype.query.filter_by(cod_usertype=request.form['id']).first()
-        tipousuario.desc_tipousuario = form.descricao.data
-        tipousuario.status_tipousuario = form.status.data
+        tipousuario.desc_usertype = form.descricao.data
+        tipousuario.status_usertype = form.status.data
         db.session.add(tipousuario)
         db.session.commit()
     return redirect(url_for('visualizarTipoUsuario', id=id))    

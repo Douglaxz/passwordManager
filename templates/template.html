@@ -24,7 +24,7 @@
     <div class="collapse" id="navbarToggleExternalContent">
       <div class="bg-dark p-4">
         <button type="button" class="btn btn-dark btn-lg" onclick="window.location.href = '/'">home</button>
-        <button type="button" class="btn btn-dark btn-lg">usuarios</button>
+        <button type="button" class="btn btn-dark btn-lg" onclick="window.location.href = '/usuario'">usuarios</button>
         <button type="button" class="btn btn-dark btn-lg" onclick="window.location.href = '/tipousuario'">tipo usuarios</button>
         <button type="button" class="btn btn-dark btn-lg"  onclick="window.location.href = '/logout'">logout</button>
       </div>
@@ -53,6 +53,11 @@
     {% block conteudo %} 
     {% endblock%}
   </div>
+  <script>
+    function myFunction() {
+        document.getElementById("formulario").submit();
+    }
+  </script>  
 </body>
 </div>
 <footer class="bg-dark text-center text-white">
@@ -62,9 +67,6 @@
     <section class="mb-4">
       <!-- Facebook -->
       <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fa fa-facebook-official"></i></a>
-
-      <!-- Twitter -->
-      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fa fa-twitter"></i></a>
 
       <!-- Google -->
       <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fa fa-google"></i></a>

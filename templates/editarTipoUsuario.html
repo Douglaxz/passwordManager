@@ -1,19 +1,24 @@
 {% extends "template.html"%}
 {% block conteudo %}
-<form method="post" action="{{ url_for('atualizarTipoUsuario') }}" enctype="multipart/form-data">
+<form method="post" action="{{ url_for('atualizarTipoUsuario') }}" enctype="multipart/form-data" id="formulario">
   <br>
-  <div class="container w-100 p-3 bg-dark">
-    <div class="row">
-      <div class="col-lg text-left text-white font-weight-bold">
-        {{ titulo }}
-      </div>
-      <div class="col-md text-right">
-        {{form.salvar(class="btn btn-primary")}}
-        <a class="btn btn-danger" href="{{url_for('visualizarTipoUsuario',id=id)}}") >Voltar</a>
-      </div>
-    </div>
+  <!-- Padrão para desktop/notebook -->
+  <div class="boxtitulo bg-dark justify-content-between">
+    <div class="col-md-4">{{ titulo }}</div>
+    <div class="col-md-4 offset-md-4" style="text-align: right;">
+    <a class="btn btn-primary" href="#" onclick="myFunction()"><i class="bi bi-save" style="font-size:1.5rem; color:white;"></i></a>
+    <a class="btn btn-danger" href="{{url_for('visualizarTipoUsuario',id=id)}}"><i class="bi bi-arrow-counterclockwise" style="font-size:1.5rem; color:white;"></i></a>  
   </div>
-  <br>
+</div>  
+  <!-- Padrão para mobile -->
+<div class="boxtitulocombusca_responsivo bg-dark">
+  <div class="col-md-4">{{ titulo }}</div>
+  <div class="col-md-4 offset-md-4" style="text-align: center;">
+    <a class="btn btn-primary" href="#" onclick="myFunction()"><i class="bi bi-save" style="font-size:1.5rem; color:white;"></i></a>
+    <a class="btn btn-danger" href="{{url_for('tipousuario')}}"><i class="bi bi-arrow-counterclockwise" style="font-size:1.5rem; color:white;"></i></a>   
+  </div>
+</div>
+<div class="boxformulario bg-light p-2 text-dark bg-opacity-50">
   <fieldset>
     <input type="hidden" name="id" id="id" value="{{id}}">
     {{form.csrf_token()}}
@@ -26,5 +31,6 @@
       {{form.status(class="form-control readonly")}}
     </div>
   </fieldset>
+</div>
 </form>
 {% endblock%}

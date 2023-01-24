@@ -11,7 +11,7 @@ body {
 .container {
     border-radius: 4px;
     margin: auto;
-    width: 80%;
+    width: 100%;
 }
 
 .little-container {
@@ -570,6 +570,7 @@ table {
     color: #FFF;
     text-align: center;   
     font-weight: bold;
+    display: flex;
 }
 
 .boxtitulocombusca {
@@ -583,6 +584,15 @@ table {
     text-align: center;   
     font-weight: bold;
     display: flex;
+}
+
+.boxtitulocombusca_responsivo {
+    display:none
+}
+
+
+.boxtitulo_responsivo {
+    display:none
 }
 
 .boxcentral {
@@ -616,40 +626,31 @@ footer {
     }
 
     .boxtitulo {
-        margin: 10px auto;
-        width: 100%; /* Valor da Largura */
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px;
-        padding: 5px;
-        line-height: 70px;
-        font-size: 12px;
-        color: #FFF;
-        text-align: center;   
-        font-weight: bold;
-        display: inline-block;
+        display: none;
     }
 
     .boxtitulocombusca {
-        margin: 2px;
-        width: 90%; /* Valor da Largura */
-        border-radius: 10px;
-        padding: 5px;
+        display: none;
+    }
+
+    .boxtitulocombusca_responsivo {
+        display:block;
         line-height: 70px;
-        font-size: 16px;
-        color: #FFF;
+        border-radius: 10px;  
         text-align: center;   
-        font-weight: bold;
-    }    
+        font-weight: bold;     
+        font-size: 18px;      
+        color: #FFF;
+        width: 95vw;
+    }
 
     .boxcentral {
-        margin: 2px;
-        width: 90%; /* Valor da Largura */
         align-items: center;
         justify-content: center;
         border-radius: 10px;
-        padding: 10px;  
         line-height: 170%;
         text-align: left;
+        width: 95vw;
     }
+
   }
