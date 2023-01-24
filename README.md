@@ -18,8 +18,8 @@ Para começar, verifique a instalação dos seguintes itens:
 - Mysql WorkBench
 
 # :paperclips: Colaborando:
-- Rodrigo Freitas - Dicas de frontend
-- Thiago Lima - Dicas de estilo
+- Rodrigo Freitas (@Rodjfreitas)- Dicas de frontend @rodrigo
+- Thiago Lima (@thiagoa-lima)- Dicas de estilo
 
 # :pushpin: Versão:
 - Versão: 1.0
