@@ -1,6 +1,7 @@
 body {
     padding-top: 10px;
     background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+    font-family: 'Open Sans', sans-serif;
 }
 
 .btn {
