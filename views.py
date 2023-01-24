@@ -107,10 +107,9 @@ def visualizarUsuario(id):
     usuario = tb_user.query.filter_by(cod_user=id).first()
     form = FormularioUsuarioVisualizar()
     form.nome.data = usuario.name_user
-    form.senha.data = usuario.senha_user
     form.status.data = usuario.status_user
     form.login.data = usuario.login_user
-    form.tipousuario.data = usuario.cod_typeuser
+    form.tipousuario.data = usuario.cod_usertype
     return render_template('visualizarUsuario.html', titulo='Visualizar Usuário', id=id, form=form)   
 
 # rota para editar formulário usuário 
@@ -121,20 +120,18 @@ def editarUsuario(id):
     usuario = tb_user.query.filter_by(cod_user=id).first()
     form = FormularioUsuario()
     form.nome.data = usuario.name_user
-    form.senha.data = usuario.senha_user
     form.status.data = usuario.status_user
     form.login.data = usuario.login_user
-    form.tipousuario.data = usuario.cod_typeuser
+    form.tipousuario.data = usuario.cod_usertype
     return render_template('editarUsuario.html', titulo='Editar Usuário', id=id, form=form)    
        
 # rota para criar usuário no banco de dados
-@app.route('/criar', methods=['POST',])
-def criar():
+@app.route('/criarUsuario', methods=['POST',])
+def criarUsuario():
     form = FormularioUsuario(request.form)
     if not form.validate_on_submit():
         return redirect(url_for('novo'))
     nome  = form.nome.data
-    senha = form.senha.data
     status = form.status.data
     login = form.login.data
     tipousuario = form.tipousuario.data
@@ -142,7 +139,7 @@ def criar():
     if usuario:
         flash ('Usuário já existe')
         return redirect(url_for('index')) 
-    novoUsuario = tb_user(nome_user=nome, senha_user=senha, status_user=status, login_user=login, cod_usertype=tipousuario)
+    novoUsuario = tb_user(nome_user=nome, status_user=status, login_user=login, cod_usertype=tipousuario)
     db.session.add(novoUsuario)
     db.session.commit()
 
@@ -155,21 +152,19 @@ def criar():
 #    return redirect(url_for('usuario'))
 
 # rota para atualizar usuário no banco de dados
-#@app.route('/atualizarUsuario', methods=['POST',])
-#def atualizarUsuario():
-#    form = FormularioUsuario(request.form)
-#    if form.validate_on_submit():
-#        id = request.form['id']
-#        usuario = tb_usuarios.query.filter_by(cod_usuario=request.form['id']).first()
-#        usuario.nome_usuario = form.nome.data
-#        usuario.senha_usuario = form.senha.data
-#        usuario.status_usuario = form.status.data
-#        usuario.login_usuario = form.login.data
-#        usuario.cod_tipousuario = form.tipousuario.data
-#        usuario.cod_area = form.area.data
-#        db.session.add(usuario)
-#        db.session.commit()
-#    return redirect(url_for('visualizarUsuario', id=id))
+@app.route('/atualizarUsuario', methods=['POST',])
+def atualizarUsuario():
+    form = FormularioUsuario(request.form)
+    if form.validate_on_submit():
+        id = request.form['id']
+        usuario = tb_user.query.filter_by(cod_user=request.form['id']).first()
+        usuario.name_user = form.nome.data
+        usuario.status_user = form.status.data
+        usuario.login_user = form.login.data
+        usuario.cod_uertype = form.tipousuario.data
+        db.session.add(usuario)
+        db.session.commit()
+    return redirect(url_for('visualizarUsuario', id=id))
 
 # rota para deletar usuário no banco de dados
 #@app.route('/deletarUsuario/<int:id>')

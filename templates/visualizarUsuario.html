@@ -1,30 +1,30 @@
 {% extends "template.html"%}
 {% block conteudo %}
-<form method="post" action="{{ url_for('editarUsuario',id=id) }}" enctype="multipart/form-data">
-  <br>
-  <div class="container w-100 p-3 bg-dark">
-    <div class="row">
-      <div class="col-lg text-left text-white font-weight-bold">
-        {{ titulo }}
-      </div>
-      <div class="col-md text-right">
-        <a class="btn btn-primary" href="{{url_for('editarUsuario',id=id)}}">Editar</a>
-        <a class="btn btn-warning text-white" href="{{url_for('usuario')}}">Voltar</a>
-        <a class="btn btn-danger" href="{{url_for('deletarUsuario',id=id)}}" onclick="return confirm('Você tem certeza que deseja apagar?')">Deletar</a>
-      </div>
-    </div>
+<br>
+<!-- Padrão para desktop/notebook -->
+<div class="bg-dark justify-content-between boxtitulo">
+  <div class="col-md-4">{{ titulo }}</div>
+  <div class="col-md-4 offset-md-4" style="text-align: right;">
+    <a class="btn btn-primary" href="{{url_for('editarUsuario',id=id)}}"><i class="bi bi-pencil" style="font-size:1.5rem; color:white;"></i></a>
+    <a class="btn btn-danger" href="{{url_for('usuario')}}"><i class="bi bi-arrow-counterclockwise" style="font-size:1.5rem; color:white;"></i></a>  
   </div>
-  <br>
+</div>
+<!-- Padrão para mobile -->
+<div class="boxtitulocombusca_responsivo bg-dark">
+  <div class="col-md-4">{{ titulo }}</div>
+  <div class="col-md-4 offset-md-4" style="text-align: center;">
+    <a class="btn btn-primary" href="{{url_for('editarUsuario',id=id)}}"><i class="bi bi-pencil" style="font-size:1.5rem; color:white;"></i></a>
+    <a class="btn btn-danger" href="{{url_for('usuario')}}"><i class="bi bi-arrow-counterclockwise" style="font-size:1.5rem; color:white;"></i></a>   
+  </div>
+</div>
+<!-- conteudo -->
+<div class="boxformulario bg-light p-2 text-dark bg-opacity-50">
   <fieldset>
     <input type="hidden" name="id" id="id" value="{{id}}">
     {{form.csrf_token()}}
     <div class="form-group">
       {{form.nome.label(class="form-label")}}
       {{form.nome(class="form-control")}}
-    </div>
-    <div class="form-group">
-      {{form.senha.label(class="form-label")}}
-      {{form.senha(class="form-control")}}
     </div>
     <div class="form-group">
       {{form.status.label(class="form-label")}}
@@ -37,53 +37,7 @@
     <div class="form-group">
       {{form.tipousuario.label(class="form-label")}}
       {{form.tipousuario(class="form-control")}}
-    </div>   
-    <div class="form-group">
-      {{form.area.label(class="form-label")}}
-      {{form.area(class="form-control")}}
-    </div>  
+    </div>    
   </fieldset>
-</form>
-<br>
-<div class="container w-100 p-3 bg-dark">
-  <div class="row">
-    <div class="col-lg text-left text-white font-weight-bold">
-      Beneficios Cadastrados
-    </div>
-    <div class="col-md text-right">
-      <div class="p-2 bd-warning "><a class="btn btn-success" href="{{url_for('novoBeneficioUsuario', id=id)}}">Novo</a></div>
-    </div>
-  </div>
 </div>
-<br>
-
-<fieldset>
-  <input type="hidden" name="id" id="id" value="{{id}}">
-  {{form1.csrf_token()}}
-  {% for item in beneficiousuario %}
-  <div class="form-group">
-    <div class="form-group">
-      <form method="post" action="{{ url_for('novoBeneficioUsuario',id=id) }}" enctype="multipart/form-data"></form>
-      {{form1.beneficioUsuario(class="form-control")}}
-    </form>
-    </div>  
-  </div>
-  {% endfor %}
-</fieldset>
-
-<table class="table table-striped table-responsiv">
-  <tbody>
-      {% for item in beneficiosusuario%}
-      <tr>
-          <td class="text-left col-md-10">
-            <input type="text" class="form-control" value="{{ item.desc_beneficio }}" readonly="readonly">
-          </td>
-          <td class="text-left col-md-2">
-            <a class="btn btn-danger" href="{{url_for('deletarBeneficioUsuario',id=id, beneficiousuario=item.cod_beneficiousuario)}}" onclick="return confirm('Você tem certeza que deseja apagar?')">Deletar</a>
-        </td>              
-      </tr>
-      {% endfor %}
-  </tbody>
-</table>
-
 {% endblock%}
