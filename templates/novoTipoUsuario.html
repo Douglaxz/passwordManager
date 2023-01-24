@@ -1,0 +1,29 @@
+{% extends "template.html"%}
+{% block conteudo %}
+<form method="post" action="{{ url_for('criarTipoUsuario') }}" enctype="multipart/form-data">
+  <br>
+  <div class="boxtitulo bg-dark">
+  <div class="d-flex justify-content-between">
+    <div class="col-md-4">{{ titulo }}</div>
+    <div class="col-md-4 offset-md-4" style="text-align: right;">
+      {{form.salvar(class="btn btn-primary")}}
+      <a class="btn btn-danger" href="{{url_for('tipousuario')}}">Voltar</a>      
+    </div>
+  </div>
+  </div>
+  <div class="boxformulario bg-light p-2 text-dark bg-opacity-50">
+  <fieldset>
+    {{form.csrf_token()}}
+    <div class="form-group">
+      {{form.descricao.label(class="form-label")}}
+      {{form.descricao(class="form-control")}}
+    </div>
+    <div class="form-group">
+      {{form.status.label(class="form-label")}}
+      {{form.status(class="form-control")}}
+    </div>
+  </fieldset>
+</form>
+
+
+{% endblock%}

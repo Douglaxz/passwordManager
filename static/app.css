@@ -77,6 +77,7 @@ td {
     justify-content: center;
     align-items: center;
     }
+
 .box1 {
     width: 350px;
     height: 350px;
@@ -554,3 +555,63 @@ table {
     color: #fff;
     border: 3px solid #eee;
 }
+
+
+.boxformulario {
+    margin: 10px auto;
+    width: 60%; /* Valor da Largura */
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px;  
+    line-height: 170%;
+}
+
+.boxtitulo {
+    margin: 10px auto;
+    width: 60%; /* Valor da Largura */
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px;
+    line-height: 70px;
+    font-size: 18px;
+    color: #FFF;
+    text-align: center;   
+    font-weight: bold;
+}
+
+
+footer {
+    width: 100%;
+    position: fixed;
+    bottom:0;
+    left:0;
+}
+
+
+@media screen and (max-width: 400px) {
+    .boxformulario {
+        margin: 10px auto;
+        width: 100%; /* Valor da Largura */
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        padding: 10px;  
+        line-height: 170%;
+    }
+
+    .boxtitulo {
+        margin: 10px auto;
+        width: 100%; /* Valor da Largura */
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        padding: 5px;
+        line-height: 60px;
+        font-size: 12px;
+        color: #FFF;
+        text-align: center;   
+        font-weight: bold;
+    }
+  }

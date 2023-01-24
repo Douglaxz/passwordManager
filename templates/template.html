@@ -25,7 +25,7 @@
       <div class="bg-dark p-4">
         <button type="button" class="btn btn-dark btn-lg" onclick="window.location.href = '/'">home</button>
         <button type="button" class="btn btn-dark btn-lg">usuarios</button>
-        <button type="button" class="btn btn-dark btn-lg">tipo usuarios</button>
+        <button type="button" class="btn btn-dark btn-lg" onclick="window.location.href = '/tipousuario'">tipo usuarios</button>
         <button type="button" class="btn btn-dark btn-lg"  onclick="window.location.href = '/logout'">logout</button>
       </div>
     </div>
@@ -36,31 +36,25 @@
       <font color="white" size="+1">
         gerenciador de senhas
       </font>
-      
-      
     </nav>
   </div>
 </header>
-
 <body>
-
   <div class="container">
     {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul id="messages" class="list-unstyled">
-      {% for message in messages %}
-      <li class="alert alert-success">{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
+      {% if messages %}
+        <ul id="messages" class="list-unstyled">
+          {% for message in messages %}
+            <li class="alert alert-success">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
     {% endwith %}
-
-
-
-    {% block conteudo %} {% endblock%}
-
+    {% block conteudo %} 
+    {% endblock%}
   </div>
 </body>
+</div>
 <footer class="bg-dark text-center text-white">
   <!-- Grid container -->
   <div class="container p-4 pb-0">
@@ -99,7 +93,6 @@
     <!-- Section: Social media -->
   </div>
   <!-- Grid container -->
-
   <!-- Copyright -->
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
     Douglas Amaral

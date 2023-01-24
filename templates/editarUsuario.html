@@ -1,0 +1,46 @@
+{% extends "template.html"%}
+{% block conteudo %}
+<form method="post" action="{{ url_for('atualizarUsuario') }}" enctype="multipart/form-data">
+  <br>
+  <div class="container w-100 p-3 bg-dark">
+    <div class="row">
+      <div class="col-lg text-left text-white font-weight-bold">
+        {{ titulo }}
+      </div>
+      <div class="col-md text-right">
+        {{form.salvar(class="btn btn-primary")}}
+        <a class="btn btn-danger" href="{{url_for('visualizarUsuario',id=id)}}") >Voltar</a>
+      </div>
+    </div>
+  </div>
+  <br>
+  <fieldset>
+    <input type="hidden" name="id" id="id" value="{{id}}">
+    {{form.csrf_token()}}
+    <div class="form-group">
+      {{form.nome.label(class="form-label")}}
+      {{form.nome(class="form-control")}}
+    </div>
+    <div class="form-group">
+      {{form.senha.label(class="form-label")}}
+      {{form.senha(class="form-control")}}
+    </div>
+    <div class="form-group">
+      {{form.status.label(class="form-label")}}
+      {{form.status(class="form-control")}}
+    </div>
+    <div class="form-group">
+      {{form.login.label(class="form-label")}}
+      {{form.login(class="form-control")}}
+    </div>
+    <div class="form-group">
+      {{form.tipousuario.label(class="form-label")}}
+      {{form.tipousuario(class="form-control")}}
+    </div> 
+    <div class="form-group">
+      {{form.area.label(class="form-label")}}
+      {{form.area(class="form-control")}}
+    </div>    
+  </fieldset>
+</form>
+{% endblock%}

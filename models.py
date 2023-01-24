@@ -14,10 +14,10 @@ class tb_user(db.Model):
         return '<Name %r>' % self.name
 
 # criação da classe tipousuário conectada com o banco de dados mysql
-#class tb_tipousuario(db.Model):
-#    cod_tipousuario = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#    desc_tipousuario = db.Column(db.String(50), nullable=False)
-#    status_tipousuario = db.Column(db.Integer, nullable=False)
+class tb_usertype(db.Model):
+    cod_usertype = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    desc_usertype = db.Column(db.String(50), nullable=False)
+    status_usertype = db.Column(db.Integer, nullable=False)
 
 # criação da classe beneficios conectada com o banco de dados mysql
 #class tb_beneficios(db.Model):
