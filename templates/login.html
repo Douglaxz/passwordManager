@@ -24,13 +24,19 @@
       </form>
     </div>       
   </div>
+
+
+
+
+
+  
   <div class="container">
       <div class="content first-content">
         <div class="first-column">
           <h2 class="title-primary">Bem-vindo</h2>
           <p class="description description-primary">Por favor, faça login com </p>
           <p class="description description-primary">suas informações pessoais</p>
-          <button class="btn_login btn_login_primary">Login</button>
+          <button id="signin" class="btn_login btn_login_primary">Login</button>
         </div>
         <div class="second-column">
           <h2 class="title-second">Crie sua conta</h2>
@@ -70,7 +76,7 @@
           <h2 class="title title-primary">Olá novamente</h2>
           <p class="description description-primary">Por favor, cadastre-se </p>
           <p class="description description-primary">para usilizar nossa sistema</p>
-          <button class="btn_login btn_login_primary">Cadastrar</button>
+          <button id="signup" class="btn_login btn_login_primary">Cadastrar</button>
         </div>
         <div class="second-column">
           <h2 class="title title-second">Insira seus dados para acessar</h2>
@@ -102,5 +108,21 @@
           </form>
         </div>   
   </div>
+<script>
+  var btnSignin = document.querySelector("#signin");
+  var btnSignup = document.querySelector("#signup");
+
+  var body = document.querySelector("body");
+
+  btnSignin.addEventListener("click", function(){
+    body.className = "sign-in-js";
+  });
+
+
+  btnSignup.addEventListener("click", function(){
+    body.className = "sign-up-js";
+  });
+
+</script>
 </body>
 </html>
