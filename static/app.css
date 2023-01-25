@@ -643,19 +643,6 @@ footer {
     display: flex;
 }
 
-.formlogin{
-    display: flex;
-    flex-direction: column;
-    width: 55%;
-}
-
-.formlogin input{
-    height: 45px;
-    border: none;
-    background-color: #ecf0f1;
-    margin: 8px;
-}
-
 .content{
     background-color: #fff;
     border-radius: 15px;
@@ -672,6 +659,10 @@ footer {
     background-color: green;
     height: 100%;
     width: 40%;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+
+    left: 60%
 }
 
 .title-welcome{
@@ -698,6 +689,7 @@ footer {
     width: 150px;
     align-self: center;
     border: none;
+    margin-top: 1rem 0;
 }
 
 .btn_login_primary{
@@ -735,12 +727,8 @@ footer {
 
 .first-content{
     display: flex;
-
-}
-
-.second-content{
-    position: absolute;
     display: none;
+
 }
 
 .list-social-media{
@@ -755,11 +743,23 @@ footer {
     height: 50px;
     text-align: center;
     line-height: 50px;
-}
-
-.item-social-media a {
     color: silver;
 }
+
+.link-social-media:not(:first-child){
+    margin-left: 10px;
+}
+
+.social-media {
+    margin: 1rem 0;
+}
+
+.link-social-media:hover .item-social-media{
+    background-color: green;
+    color: white;
+    border-color: green;
+}
+
 
 .description{
     font-size: 14px;
@@ -774,4 +774,50 @@ footer {
 
 .description-second{
     color: #000;
+}
+
+.formlogin{
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+}
+
+.formlogin input{
+    height: 45px;
+    width: 100%;
+    border: none;
+    background-color: #ecf0f1;
+}
+
+.label-input{
+    background-color: #ecf0f1;
+    display: flex;
+    align-items: center;
+    margin: 8px;
+}
+
+.icon-modify{
+    padding: 0 5px;
+}
+
+/*segundo conteúdo*/
+.second-content{
+    position: absolute;
+    display: flex;
+}
+
+.second-content .first-column {
+    order: 2;
+}
+
+.second-content .second-column {
+    order: 1;
+}
+
+.password{
+    color: #34495e;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+    text-align: center;
 }
