@@ -9,36 +9,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"> 
 </head>
 <body>
-  <div class="container1">
-    <div class="box1 bg-light p-2 text-dark bg-opacity-50">
-      <div align="center">
-        <i class="bi bi-person-circle" style="font-size:7rem; color:white;"></i>
-      </div>
-      <form method="POST" action="{{url_for('autenticar')}}">
-        <input type="hidden" name="proxima" value="{{ proxima }}">
-        <p><input class="form-control" type="text" name="usuario" required placeholder="usuario"></p>
-        <p><input class="form-control" type="password" name="senha" required placeholder="senha"></p>
-        <p align="center">
-          <button type="submit" class="btn-success btn-lg btn-block" >login</button>
-        </p>
-      </form>
-    </div>       
-  </div>
-
-
-
-
-
-  
-  <div class="container">
+  <div class="container_login">
       <div class="content first-content">
         <div class="first-column">
-          <h2 class="title-primary">Bem-vindo</h2>
+          <h2 class="title-primary">Seja bem-vindo ao PasswordManager</h2>
           <p class="description description-primary">Por favor, faça login com </p>
           <p class="description description-primary">suas informações pessoais</p>
           <button id="signin" class="btn_login btn_login_primary">Login</button>
         </div>
-        <div class="second-column">
+        <div class="second-column" >
           <h2 class="title-second">Crie sua conta</h2>
           <div class="social-media">
             <ul class="list-social-media">
@@ -54,18 +33,18 @@
             </ul>
           </div>
           <p class="description description-second">ou utilize seu email para registro</p>
-          <form class="formlogin">
+          <form class="formlogin" method="POST" action="{{url_for('autenticar')}}">
             <label class="label-input">
               <i class="bi bi-person icon-modify" style="font-size:1rem; color:black;"></i>
-              <input type="text" placeholder="nome">
+              <input type="text" placeholder="nome" name="usuario">
             </label>
             <label class="label-input">
               <i class="bi bi-envelope icon-modify" style="font-size:1rem; color:black;"></i>
-              <input type="email" placeholder="email">
+              <input type="email" placeholder="email" name="senha">
             </label>
             <label class="label-input">
               <i class="bi bi-lock icon-modify" style="font-size:1rem; color:black;"></i>
-              <input type="password" placeholder="senha">
+              <input type="password" placeholder="senha" name="senha">
             </label>
             <button class="btn_login btn_login_second">Cadastrar</button>
           </form>
@@ -73,7 +52,7 @@
       </div>
       <div class="content second-content">
         <div class="first-column">
-          <h2 class="title title-primary">Olá novamente</h2>
+          <h2 class="title title-primary">Seja bem-vindo ao PasswordManager</h2>
           <p class="description description-primary">Por favor, cadastre-se </p>
           <p class="description description-primary">para usilizar nossa sistema</p>
           <button id="signup" class="btn_login btn_login_primary">Cadastrar</button>
@@ -94,14 +73,14 @@
             </ul>
           </div>
           <p class="description description-second">ou utilize seu email para login</p>
-          <form class="formlogin">
+          <form class="formlogin" method="POST" action="{{url_for('autenticar')}}">
             <label class="label-input">
-              <i class="bi bi-envelope icon-modify" style="font-size:1rem; color:black;"></i>
-              <input type="email" placeholder="email">
+              <i class="bi bi-person icon-modify" style="font-size:1rem; color:black;"></i>
+              <input type="text" placeholder="login" name="usuario">
             </label>
             <label class="label-input">
               <i class="bi bi-lock icon-modify" style="font-size:1rem; color:black;"></i>
-              <input type="password" placeholder="senha">
+              <input type="password" placeholder="senha" name="senha">
             </label>
             <a href="#" class="password">Esqueceu sua senha?</a>
             <button class="btn_login btn_login_second">Login</button>
