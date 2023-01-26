@@ -15,6 +15,7 @@ from helpers import \
     FormularioTipoUsuarioVisualizar,\
     FormularioTipoSenhaEdicao,\
     FormularioTipoSenhaVisualizar
+from config import ROWS_PER_PAGE 
 
 
 # rota index
@@ -71,7 +72,7 @@ def usuario():
     .join(tb_usertype, tb_usertype.cod_usertype==tb_user.cod_usertype)\
     .add_columns(tb_user.login_user, tb_user.cod_user, tb_user.name_user, tb_user.status_user, tb_usertype.desc_usertype)\
     .order_by(tb_user.name_user)\
-    .paginate(page=page, per_page=5, error_out=False)
+    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
     return render_template('usuarios.html', titulo='Usuários', usuarios=usuarios, form=form)
 
 # rota index para mostrar pesquisa usuários
@@ -84,7 +85,7 @@ def usuarioPesquisa():
     .join(tb_usertype, tb_usertype.cod_usertype==tb_user.cod_usertype)\
     .add_columns(tb_user.login_user, tb_user.cod_user, tb_user.name_user, tb_user.status_user, tb_usertype.desc_usertype)\
     .order_by(tb_user.name_user)\
-    .paginate(page=page, per_page=5, error_out=False)
+    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
     return render_template('usuarios.html', titulo='Usuários' , usuarios=usuarios, form=form)
 
 # rota para criar novo formulário usuário 
@@ -187,7 +188,7 @@ def tipousuario():
     page = request.args.get('page', 1, type=int)
     form = FormularPesquisa()    
     tiposusuario = tb_usertype.query.order_by(tb_usertype.desc_usertype)\
-    .paginate(page=page, per_page=5, error_out=False)
+    .paginate(page=page, per_page=ROWS_PER_PAGE , error_out=False)
     return render_template('tipousuarios.html', titulo='Tipo Usuário', tiposusuario=tiposusuario, form=form)
 
 # rota index para mostrar pesquisa dos tipo usuários
@@ -197,7 +198,7 @@ def tipousuarioPesquisa():
     form = FormularPesquisa()
     tiposusuario = tb_usertype.query.order_by(tb_usertype.desc_usertype)\
     .filter(tb_usertype.desc_usertype.ilike(f'%{form.pesquisa.data}%'))\
-    .paginate(page=page, per_page=5, error_out=False)
+    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
     return render_template('tipousuarios.html', titulo='Tipo Usuário' , tiposusuario=tiposusuario, form=form)    
 
 # rota para criar novo formulário usuário 
@@ -279,7 +280,7 @@ def tiposenha():
     page = request.args.get('page', 1, type=int)
     form = FormularPesquisa()    
     tipossenha = tb_passwordtype.query.order_by(tb_passwordtype.desc_passwordtype)\
-    .paginate(page=page, per_page=5, error_out=False)
+    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
     return render_template('tiposenha.html', titulo='Tipo Senha', tipossenha=tipossenha, form=form)
 
 # rota index para pesquisar os beneficios
@@ -289,7 +290,7 @@ def tipossenhaPesquisa():
     form = FormularPesquisa()
     tipossenha = tb_passwordtype.query.order_by(tb_passwordtype.desc_passwordtype)\
     .filter(tb_passwordtype.desc_passwordtype.ilike(f'%{form.pesquisa.data}%'))\
-    .paginate(page=page, per_page=5, error_out=False)
+    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
     return render_template('tiposenha.html', titulo='Tipo Senha' , tipossenha=tipossenha, form=form)
 
 # rota para criar novo formulário usuário 
