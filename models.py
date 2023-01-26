@@ -30,13 +30,16 @@ class tb_passwordtype(db.Model):
         return '<Name %r>' % self.name        
 
 # criação da classe area conectada com o banco de dados mysql
-#class tb_areas(db.Model):
-#    cod_area = db.Column(db.Integer, primary_key=True, autoincrement=True)
-#    desc_area = db.Column(db.String(50), nullable=False)
-#    status_area = db.Column(db.Integer, nullable=False)
+class tb_userpassword(db.Model):
+    cod_userpassword = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    cod_passwordtype = db.Column(db.Integer, nullable=False)
+    username_userpassword = db.Column(db.String(50), nullable=False)
+    password_userpassword = db.Column(db.String(50), nullable=False)
+    date_userpassword = db.Column(db.DateTime, nullable=False)
+    cod_user = db.Column(db.Integer, nullable=False)
 
-#    def __repr__(self):
-#        return '<Name %r>' % self.name   
+    def __repr__(self):
+        return '<Name %r>' % self.name   
 
 # criação da classe tipo lancamento conectada com o banco de dados mysql
 #class tb_tipolancamento(db.Model):

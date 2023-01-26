@@ -1,0 +1,85 @@
+{% extends "template.html"%}
+{% block conteudo %}
+<!-- barra de navegação para desktop/notebook -->
+<br>
+<form method="post" action="{{ url_for('usuarioSenhaPesquisa') }}" enctype="multipart/form-data" id="formulario">
+  <div class="boxtitulocombusca bg-dark align-items-center">
+    <div class="p-2 bd-highlight col-lg text-center text-white font-weight-bold "><i class="bi bi-people" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Tipos de Usuários"></i></div>
+    <div class="p-2 bd-highlight col-lg text-left text-white font-weight-bold ">{{ titulo }}</div>
+    <div class="container w-25 input-group">{{form.pesquisa(class="form-control")}}</div>    
+    <div class="p-2"><a class="btn btn-warning" href="#" onclick="myFunction()"><i class="bi bi-search" style="font-size:1.5rem; color:white;"></i></a></div>
+    <div class="p-2"><a class="btn btn-danger" href="{{url_for('usuarioSenha')}}"><i class="bi bi-eraser" style="font-size:1.5rem; color:white;"></i></a></div>
+    <div class="p-2"><a class="btn btn-success" href="{{url_for('novoUsuarioSenha')}}"><i class="bi bi-file-earmark-plus" style="font-size:1.5rem; color:white;"></i></a></div>
+  </div>
+  <!-- barra de navegação para mobile -->
+  <div class="bg-dark align-items-center boxtitulocombusca_responsivo">
+    
+    <div class="p-2 bd-highlight col-lg text-left text-white font-weight-bold "><i class="bi bi-people" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Tipos de Usuários"></i> {{ titulo }}</div>
+    <div class="container input-group">{{form.pesquisa(class="form-control")}}</div>    
+    <div class="p-2 align-items-center"><a class="btn btn-warning" href="#" onclick="myFunction()"><i class="bi bi-search" style="font-size:1.5rem; color:white;"></i></a>
+    <a class="btn btn-danger" href="{{url_for('usuarioSenha')}}"><i class="bi bi-eraser" style="font-size:1.5rem; color:white;"></i></a>
+    <a class="btn btn-success" href="{{url_for('novoUsuarioSenha')}}"><i class="bi bi-file-earmark-plus" style="font-size:1.5rem; color:white;"></i></a></div>
+  </div>
+</form>
+<!-- mostrar dados -->
+<div class="boxcentral bg-light p-2 text-dark bg-opacity-50">
+  <table class="table table-striped table-responsiv">
+      <thead class="bg-dark text-white">
+          <tr>
+              <th class="text-left col-md-6">Tipo</th>
+              <th class="text-left col-md-2">Icone</th>
+              <th class="text-left col-md-2">Status</th>
+              <th class="text-left col-md-2">Ações</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for usuariosenha in usuariosenhas.items %}
+          <tr>
+              <td class="text-left">{{ usuariosenha.desc_passwordtype }}</td>
+              <td class="text-left"><i class="{{ usuariosenha.icon_passwordtype }}" style="font-size:1.5rem; color:black;"></td>
+              <td class="text-left">
+              <td>
+                <a class="btn btn-primary" href="{{url_for('visualizarUsuarioSenha',id=usuariosenha.cod_userpassword)}}"><i class="bi bi-eye" style="font-size:1.5rem; color:white;"></i></a>
+            </td>              
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+</div>
+<!-- navegação entre as páginas -->
+<div class="boxcentral bg-light p-2 text-dark bg-opacity-50">
+  <!-- paginação links-->
+  <div class="text-right">
+    <a href="{{ url_for('usuarioSenha', page=usuariosenhas.prev_num) }}"
+      class="btn btn-outline-dark 
+      {% if usuariosenhas.page == 1 %}disabled{% endif %}">
+        &laquo;
+    </a>
+  <!-- Loop through the number of pages to display a link for each-->
+    {% for page_num in usuariosenhas.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+  {% if page_num %}
+  <!-- Check for the active page and set the link to "Active"-->
+            {% if usuariosenhas.page == page_num %}
+            <a href="{{ url_for('usuarioSenha', page=page_num) }}"
+              class="btn btn-dark">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a href="{{ url_for('usuarioSenha', page=page_num) }}"
+              class="btn btn-outline-dark">
+                {{ page_num }}
+            </a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+    <a href="{{ url_for('usuarioSenha', page=usuariosenhas.next_num) }}"
+      class="btn btn-outline-dark 
+      {% if usuariosenhas.page == usuariosenhas.pages %}disabled{% endif %}">
+        &raquo;
+    </a>
+  </div>
+  <p class="text-right mt-3">Mostrando página {{ usuariosenhas.page }} de {{ usuariosenhas.pages }}</p>
+</div>
+{% endblock%}

@@ -1,7 +1,7 @@
 #importações
 import os
 from gerenciadorPassword import app, db
-from models import tb_user, tb_usertype
+from models import tb_user, tb_usertype, tb_passwordtype
 from flask_wtf import FlaskForm
 from wtforms import StringField, validators, SubmitField,IntegerField, SelectField,PasswordField,DateField
 
@@ -68,6 +68,23 @@ class FormularioTipoSenhaVisualizar(FlaskForm):
     icone = StringField('Icone:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={'readonly': True})
     salvar = SubmitField('Salvar')   
 
+#------------------------------------------------------------------------------------------------------------------------------
+#USUARIO SENHA
+#------------------------------------------------------------------------------------------------------------------------------
+
+#criação via wftorm do formulario de tipo usuarios
+class FormularioUsuarioSenhaEdicao(FlaskForm):
+    usuario = StringField('Usuário:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    senha = StringField('Senha:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    tipo = SelectField('Tipo:', coerce=int,  choices=[(g.cod_passwordtype, g.desc_passwordtype) for g in tb_passwordtype.query.order_by('desc_passwordtype')])
+    salvar = SubmitField('Salvar')    
+
+#criação via wftorm do formulario de tipo usuarios
+class FormularioUsuarioSenhaVisualizar(FlaskForm):
+    usuario = StringField('Usuário:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={'readonly': True})
+    senha = StringField('Senha:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={'readonly': True})
+    tipo = SelectField('Tipo:', coerce=int, choices=[(g.cod_passwordtype, g.desc_passwordtype) for g in tb_passwordtype.query.order_by('desc_passwordtype')], render_kw={'readonly': True})
+    salvar = SubmitField('Salvar')  
 #------------------------------------------------------------------------------------------------------------------------------
 # OUTROS
 #------------------------------------------------------------------------------------------------------------------------------

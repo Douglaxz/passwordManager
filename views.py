@@ -5,8 +5,9 @@ import time
 from datetime import date, timedelta
 from gerenciadorPassword import app, db
 from models import tb_user,\
-     tb_usertype,\
-     tb_passwordtype
+    tb_usertype,\
+    tb_passwordtype,\
+    tb_userpassword
 from helpers import \
     FormularPesquisa, \
     FormularioUsuario, \
@@ -14,7 +15,9 @@ from helpers import \
     FormularioTipoUsuarioEdicao,\
     FormularioTipoUsuarioVisualizar,\
     FormularioTipoSenhaEdicao,\
-    FormularioTipoSenhaVisualizar
+    FormularioTipoSenhaVisualizar,\
+    FormularioUsuarioSenhaEdicao
+
 from config import ROWS_PER_PAGE 
 
 
@@ -48,7 +51,7 @@ def autenticar():
             session['usuario_logado'] = usuario.login_user
             session['nomeusuario_logado'] = usuario.name_user
             session['tipousuario_logado'] = usuario.cod_usertype
-            session['tipousuario_logado'] = 1
+            session['coduser_logado'] = usuario.cod_user
             flash(usuario.name_user + ' Usuário logado com sucesso')
             return redirect('/')
         else:
@@ -356,3 +359,61 @@ def atualizarTipoSenha():
         db.session.add(tiposenha)
         db.session.commit()
     return redirect(url_for('visualizarTipoSenha', id=id))   
+
+#---------------------------------------------------------------------------------------------------------------------------------
+# USUARIO SENHA
+#---------------------------------------------------------------------------------------------------------------------------------
+# rota index para mostrar as senhas do
+@app.route('/usuarioSenha')
+def usuarioSenha():
+    page = request.args.get('page', 1, type=int)
+    form = FormularPesquisa()    
+    usuariosenhas = tb_userpassword.query.order_by(tb_userpassword.date_userpassword)\
+    .join(tb_passwordtype, tb_passwordtype.cod_passwordtype==tb_userpassword.cod_passwordtype)\
+    .add_columns(tb_passwordtype.icon_passwordtype, tb_userpassword.cod_userpassword, tb_userpassword.username_userpassword)\
+    .filter(tb_userpassword.cod_user==session['coduser_logado'])\
+    .order_by(tb_userpassword.date_userpassword)\
+    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
+    return render_template('usuariosenhas.html', titulo='Senha', usuariosenhas=usuariosenhas, form=form)
+
+# rota index para pesquisar os beneficios
+@app.route('/usuarioSenhaPesquisa', methods=['POST',])
+def usuarioSenhaPesquisa():
+    page = request.args.get('page', 1, type=int)
+    form = FormularPesquisa()
+    usuariosenhas = tb_userpassword.query.order_by(tb_userpassword.date_userpassword)\
+    .filter(tb_userpassword.desc_passwordtype.ilike(f'%{form.pesquisa.data}%'))\
+    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
+    return render_template('usuariosenhas.html', titulo='Tipo Senha' , usuariosenhas=usuariosenhas, form=form)
+
+# rota para criar formulário de criação de senha
+@app.route('/novoUsuarioSenha')
+def novoUsuarioSenha():
+    if session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('novoTipoUsuario')))
+    form = FormularioTipoSenhaEdicao()
+    return render_template('novoUsuarioSenha.html', titulo='Nova senha', form=form)
+
+
+# rota para criar tipo usuário no banco de dados
+@app.route('/criarUsuarioSenha', methods=['POST',])
+def criarUsuarioSenha():
+    form = FormularioTipoSenhaEdicao(request.form)
+    if not form.validate_on_submit():
+        return redirect(url_for('criarS'))
+    usuario  = form.usuario.data
+    senha = form.senha.data
+    tipo = form.tipo.data
+    data = date
+    usuario = session['coduser_logado']
+    novoUsuarioSenha = tb_userpassword(cod_passwordtype=tipo, username_userpassword=usuario, password_userpassword=senha, date_userpassword=data,cod_user=usuario)
+    db.session.add(novoUsuarioSenha)
+    db.session.commit()
+    return redirect(url_for('usuarioSenha'))
+
+@app.route('/visualizarUsuarioSenha', methods=['POST',])
+def visualizarUsuarioSenha():
+    pass
+
+
+ 
