@@ -28,9 +28,6 @@
         <button type="button" class="btn btn-outline-light btn-lg bi bi-people" onclick="window.location.href = '/tipousuario'">Tipos Usuário</button>
         <button type="button" class="btn btn-outline-light btn-lg bi-card-list" onclick="window.location.href = '/tiposenha'">Tipos Senhas</button>
         <button type="button" class="btn btn-outline-light btn-lg bi bi-box-arrow-right" onclick="window.location.href = '/logout'"> Logout</button>
-
-
-        
       </div>
     </div>
     <nav class="navbar navbar-dark bg-dark">
@@ -44,7 +41,7 @@
   </div>
 </header>
 <body>
-  <div class="container">
+  <div class="container" style="min-height: 720px">
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <ul id="messages" class="list-unstyled">

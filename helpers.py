@@ -58,14 +58,14 @@ class FormularioTipoUsuarioVisualizar(FlaskForm):
 class FormularioTipoSenhaEdicao(FlaskForm):
     descricao = StringField('Descrição:', [validators.DataRequired(), validators.Length(min=1, max=50)])
     status = SelectField('Situação:', coerce=int, choices=[(0, 'Ativo'),(1, 'Inativo')])
-    icone = StringField('Descrição:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    icone = StringField('Icone:', [validators.DataRequired(), validators.Length(min=1, max=50)])
     salvar = SubmitField('Salvar')    
 
 #criação via wftorm do formulario de tipo usuarios
 class FormularioTipoSenhaVisualizar(FlaskForm):
     descricao = StringField('Descrição:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={'readonly': True})
     status = SelectField('Situação:', coerce=int, choices=[(0, 'Ativo'),(1, 'Inativo')], render_kw={'readonly': True})
-    icone = StringField('Descrição:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={'readonly': True})
+    icone = StringField('Icone:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={'readonly': True})
     salvar = SubmitField('Salvar')   
 
 #------------------------------------------------------------------------------------------------------------------------------

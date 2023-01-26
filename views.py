@@ -308,11 +308,12 @@ def criarTipoSenha():
         return redirect(url_for('criarTipoSenha'))
     desc  = form.descricao.data
     status = form.status.data
-    tiposenha = tb_usertype.query.filter_by(desc_passwordtype=desc).first()
+    icone = form.icone.data
+    tiposenha = tb_passwordtype.query.filter_by(desc_passwordtype=desc).first()
     if tiposenha:
         flash ('Tipo Senha já existe')
         return redirect(url_for('tiposenha')) 
-    novoTipoSenha = tb_passwordtype(desc_passwordtype=desc, status_passwordtype=status)
+    novoTipoSenha = tb_passwordtype(desc_passwordtype=desc, status_passwordtype=status, icon_passwordtype=icone)
     db.session.add(novoTipoSenha)
     db.session.commit()
     return redirect(url_for('tiposenha'))
@@ -326,6 +327,7 @@ def visualizarTipoSenha(id):
     form = FormularioTipoSenhaVisualizar()
     form.descricao.data = tiposenha.desc_passwordtype
     form.status.data = tiposenha.status_passwordtype
+    form.icone.data = tiposenha.icon_passwordtype
     return render_template('visualizarTipoSenha.html', titulo='Visualizar Tipo Senha', id=id, form=form)   
 
 # rota para editar formulário tipo usuário 
@@ -335,19 +337,21 @@ def editarTipoSenha(id):
         return redirect(url_for('login',proxima=url_for('visualizarTipoSenha')))
     tiposenha = tb_passwordtype.query.filter_by(cod_passwordtype=id).first()
     form = FormularioTipoSenhaEdicao()
-    form.descricao.data = tiposenha.desc_usertype
-    form.status.data = tiposenha.status_usertype
+    form.descricao.data = tiposenha.desc_passwordtype
+    form.status.data = tiposenha.status_passwordtype
+    form.icone.data = tiposenha.icon_passwordtype
     return render_template('editarTipoSenha.html', titulo='Editar Tipo Senha', id=id, form=form)   
 
 # rota para atualizar usuário no banco de dados
 @app.route('/atualizarTipoSenha', methods=['POST',])
-def atualizarTipoSenhao():
+def atualizarTipoSenha():
     form = FormularioTipoSenhaEdicao(request.form)
     if form.validate_on_submit():
         id = request.form['id']
-        tiposenha = tb_usertype.query.filter_by(cod_passwordtype=request.form['id']).first()
-        tiposenha.desc_usertype = form.descricao.data
-        tiposenha.status_usertype = form.status.data
+        tiposenha = tb_passwordtype.query.filter_by(cod_passwordtype=request.form['id']).first()
+        tiposenha.desc_passwordtype = form.descricao.data
+        tiposenha.icon_passwordtype = form.icone.data
+        tiposenha.status_passwordtype = form.status.data
         db.session.add(tiposenha)
         db.session.commit()
     return redirect(url_for('visualizarTipoSenha', id=id))   
