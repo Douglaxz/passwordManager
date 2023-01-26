@@ -17,7 +17,7 @@ Para começar, verifique a instalação dos seguintes itens:
 - Mysql WorkBench
 
 # :man_technologist: Tecnologias utilizadas:
-- HTML5
+- <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
 - CSS3
 - Javascrip
 - Python
