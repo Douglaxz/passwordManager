@@ -16,6 +16,15 @@ Para começar, verifique a instalação dos seguintes itens:
 - VsCode
 - Mysql WorkBench
 
+# :man_technologist: Tecnologias utilizadas:
+- HTML5
+- CSS3
+- Javascrip
+- Python
+- Flask
+- Mysql
+
+
 # :memo: Checklist de funcionalidades - TODO LIST
 - [X] Funcionalidade Login
 - [X] Funcionalidade Logout
