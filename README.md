@@ -50,7 +50,7 @@ Para começar, verifique a instalação dos seguintes itens:
 # :black_nib: Licença:
 - Este projeto está sob a licença educacional
 
-# :gift: Agrdecimentos:
+# :gift: Agradecimentos:
 - Francieli Medeiros Moreira Amaral
 
 
