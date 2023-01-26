@@ -29,6 +29,7 @@ Para começar, verifique a instalação dos seguintes itens:
 # :paperclips: Colaborando:
 - Rodrigo Freitas (@Rodjfreitas)- Dicas de frontend @rodrigo
 - Thiago Lima (@thiagoa-lima)- Dicas de estilo
+- Daiene Batagioti - Dica de melhor instalação da tag script do javascript
 
 # :pushpin: Versão:
 - Versão: 1.0
