@@ -16,7 +16,7 @@ Para começar, verifique a instalação dos seguintes itens:
 - VsCode
 - Mysql WorkBench
 
-# TODO LIST
+# :memo: Checklist de funcionalidades - TODO LIST
 - [X] Funcionalidade Login
 - [X] Funcionalidade Logout
 - [X] Funcionalidade template
