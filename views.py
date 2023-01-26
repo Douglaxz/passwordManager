@@ -5,20 +5,16 @@ import time
 from datetime import date, timedelta
 from gerenciadorPassword import app, db
 from models import tb_user,\
-     tb_usertype
-#    tb_beneficios, \
-#    tb_areas, \
-#    tb_tipolancamento, \
-#    tb_beneficiousuario,\
-#    tb_periodos,\
-#    tb_periodofuncionario,\
-#    resultadoBuscaPeriodo
+     tb_usertype,\
+     tb_passwordtype
 from helpers import \
     FormularPesquisa, \
     FormularioUsuario, \
     FormularioUsuarioVisualizar, \
     FormularioTipoUsuarioEdicao,\
-    FormularioTipoUsuarioVisualizar    
+    FormularioTipoUsuarioVisualizar,\
+    FormularioTipoSenhaEdicao,\
+    FormularioTipoSenhaVisualizar
 
 
 # rota index
@@ -275,23 +271,83 @@ def atualizarTipoUsuario():
 #    return redirect(url_for('tipousuario'))    
 
 #---------------------------------------------------------------------------------------------------------------------------------
-#BENEFICIOS
+#TIPO DE SENHAS
 #---------------------------------------------------------------------------------------------------------------------------------
-# rota index para mostrar os beneficios
-#@app.route('/beneficio')
-#def beneficio():
-#    page = request.args.get('page', 1, type=int)
-#    form = FormularPesquisa()    
-#    beneficios = tb_beneficios.query.order_by(tb_beneficios.desc_beneficio)\
-#    .paginate(page=page, per_page=5, error_out=False)
-#    return render_template('beneficios.html', titulo='Beneficios', beneficios=beneficios, form=form)
+# rota index para mostrar os tipos de senha
+@app.route('/tiposenha')
+def tiposenha():
+    page = request.args.get('page', 1, type=int)
+    form = FormularPesquisa()    
+    tipossenha = tb_passwordtype.query.order_by(tb_passwordtype.desc_passwordtype)\
+    .paginate(page=page, per_page=5, error_out=False)
+    return render_template('tiposenha.html', titulo='Tipo Senha', tipossenha=tipossenha, form=form)
 
 # rota index para pesquisar os beneficios
-#@app.route('/beneficioPesquisa', methods=['POST',])
-#def beneficioPesquisa():
-#    page = request.args.get('page', 1, type=int)
-#    form = FormularPesquisa()
-#    lista = tb_beneficios.query.order_by(tb_beneficios.desc_beneficio)\
-#    .filter(tb_beneficios.desc_beneficio.ilike(f'%{form.pesquisa.data}%'))\
-#    .paginate(page=page, per_page=5, error_out=False)
-#    return render_template('beneficios.html', titulo='Benefícios' , lista=lista, form=form)
+@app.route('/tiposenhaPesquisa', methods=['POST',])
+def tipossenhaPesquisa():
+    page = request.args.get('page', 1, type=int)
+    form = FormularPesquisa()
+    tipossenha = tb_passwordtype.query.order_by(tb_passwordtype.desc_passwordtype)\
+    .filter(tb_passwordtype.desc_passwordtype.ilike(f'%{form.pesquisa.data}%'))\
+    .paginate(page=page, per_page=5, error_out=False)
+    return render_template('tiposenha.html', titulo='Tipo Senha' , tipossenha=tipossenha, form=form)
+
+# rota para criar novo formulário usuário 
+@app.route('/novoTipoSenha')
+def novoTipoSenha():
+    if session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('novoTipoUsuario')))
+    form = FormularioTipoSenhaEdicao()
+    return render_template('novoTipoSenha.html', titulo='Novo Tipo Senha', form=form)
+
+# rota para criar tipo usuário no banco de dados
+@app.route('/criarTipoSenha', methods=['POST',])
+def criarTipoSenha():
+    form = FormularioTipoSenhaEdicao(request.form)
+    if not form.validate_on_submit():
+        return redirect(url_for('criarTipoSenha'))
+    desc  = form.descricao.data
+    status = form.status.data
+    tiposenha = tb_usertype.query.filter_by(desc_passwordtype=desc).first()
+    if tiposenha:
+        flash ('Tipo Senha já existe')
+        return redirect(url_for('tiposenha')) 
+    novoTipoSenha = tb_passwordtype(desc_passwordtype=desc, status_passwordtype=status)
+    db.session.add(novoTipoSenha)
+    db.session.commit()
+    return redirect(url_for('tiposenha'))
+
+# rota para visualizar tipo usuário 
+@app.route('/visualizarTipoSenha/<int:id>')
+def visualizarTipoSenha(id):
+    if session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('visualizarTipoSenha')))
+    tiposenha = tb_passwordtype.query.filter_by(cod_passwordtype=id).first()
+    form = FormularioTipoSenhaVisualizar()
+    form.descricao.data = tiposenha.desc_passwordtype
+    form.status.data = tiposenha.status_passwordtype
+    return render_template('visualizarTipoSenha.html', titulo='Visualizar Tipo Senha', id=id, form=form)   
+
+# rota para editar formulário tipo usuário 
+@app.route('/editarTipoSenha/<int:id>')
+def editarTipoSenha(id):
+    if session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('visualizarTipoSenha')))
+    tiposenha = tb_passwordtype.query.filter_by(cod_passwordtype=id).first()
+    form = FormularioTipoSenhaEdicao()
+    form.descricao.data = tiposenha.desc_usertype
+    form.status.data = tiposenha.status_usertype
+    return render_template('editarTipoSenha.html', titulo='Editar Tipo Senha', id=id, form=form)   
+
+# rota para atualizar usuário no banco de dados
+@app.route('/atualizarTipoSenha', methods=['POST',])
+def atualizarTipoSenhao():
+    form = FormularioTipoSenhaEdicao(request.form)
+    if form.validate_on_submit():
+        id = request.form['id']
+        tiposenha = tb_usertype.query.filter_by(cod_passwordtype=request.form['id']).first()
+        tiposenha.desc_usertype = form.descricao.data
+        tiposenha.status_usertype = form.status.data
+        db.session.add(tiposenha)
+        db.session.commit()
+    return redirect(url_for('visualizarTipoSenha', id=id))   
