@@ -17,14 +17,14 @@ Para começar, verifique a instalação dos seguintes itens:
 - Mysql WorkBench
 
 # TODO LIST
-[X] Funcionalidade Login
-[X] Funcionalidade Logout
-[X] Funcionalidade template
-[X] Funcionalidade usuário
-[X] Funcionalidade tipo de usuário
-[ ] Funcionalidade tipo senha
-[ ] Funcionalidade senha
-[ ] Gerar senha
+- [X] Funcionalidade Login
+- [X] Funcionalidade Logout
+- [X] Funcionalidade template
+- [X] Funcionalidade usuário
+- [X] Funcionalidade tipo de usuário
+- [ ] Funcionalidade tipo senha
+- [ ] Funcionalidade senha
+- [ ] Gerar senha
 
 # :paperclips: Colaborando:
 - Rodrigo Freitas (@Rodjfreitas)- Dicas de frontend @rodrigo
