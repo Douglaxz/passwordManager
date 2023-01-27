@@ -32,8 +32,9 @@ Para começar, verifique a instalação dos seguintes itens:
 - [X] Funcionalidade template
 - [X] Funcionalidade usuário
 - [X] Funcionalidade tipo de usuário
-- [x] Funcionalidade tipo senha
-- [ ] Funcionalidade senha
+- [X] Funcionalidade tipo senha
+- [X] Funcionalidade senha
+- [X] Visualização por tipo de funcionário (Admnistrador/Usuário)
 - [ ] Gerar senha
 - [ ] Sugerir alteração da senha depois de algum tempo cadastrada (3 meses)
 

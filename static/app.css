@@ -182,6 +182,10 @@ q:before, q:after {
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: space-between;
+    width: 240px;
+    height: 130px;
+    margin: 5px;
+    
 }
 
 .card {
@@ -189,37 +193,41 @@ q:before, q:after {
     box-shadow: 0px 10px 10px #00000050;
     margin-bottom: 1.5rem;
     position: relative;
-    width: 450px;
 }
 
 .card__imagem {
-    width: 450px;
-    border-radius: 10px 10px 0 0;
+    width: 50px;
+    position:relative;
+    top:60%;
+    left:10%;
+    margin-top:-50px;
 }
 
 .card__tag {
-    background-color: #D9D9D940;
-    border-radius: 8px;
-    border: 2px solid transparent;
     font-size: 1.2rem;
-    left: 310px;
+    left: 90px;
     margin-right: 1.5rem;
-    padding: .5rem .5rem;
+    padding: .5rem;
     position: absolute;
-    text-align: center;
-    top: 20px;
-    width: 100px;
+    text-align: left;
+    font-weight: bold;
+
 }
 
 .card__info {
-    font-size: 1.2rem;
-    padding: 0 1.5rem 1rem 1.5rem;
+    font-size: 1rem;
+    padding: .5rem;
+    left: 90px;
+    top: 40px;
+    position: absolute;
 }
 
-.card__titulo {
-    font-weight: bold;
-    line-height: 1.2rem;
-    margin-top: 0.8em;
+.card__botao {
+    font-size: 1rem;
+    padding: .5rem;
+    left: 90px;
+    top: 65px;
+    position: absolute;
 }
 
 .card__texto {

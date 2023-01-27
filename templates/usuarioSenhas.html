@@ -20,29 +20,28 @@
   </div>
 </form>
 <!-- mostrar dados -->
-<div class="boxcentral bg-light p-2 text-dark bg-opacity-50">
-  <table class="table table-striped table-responsiv">
-      <thead class="bg-dark text-white">
-          <tr>
-              <th class="text-left col-md-6">Plataforma</th>
-              <th class="text-left col-md-2">Icone</th>
-              <th class="text-left col-md-2">Status</th>
-              <th class="text-left col-md-2">Ações</th>
-          </tr>
-      </thead>
-      <tbody>
-          {% for usuariosenha in usuariosenhas.items %}
-          <tr>
-              <td class="text-left">{{ usuariosenha.desc_passwordtype }}</td>
-              <td class="text-left"><i class="{{ usuariosenha.icon_passwordtype }}" style="font-size:1.5rem; color:black;"></td>
-              <td class="text-left">
-              <td>
-                <a class="btn btn-primary" href="{{url_for('visualizarUsuarioSenha',id=usuariosenha.cod_userpassword)}}"><i class="bi bi-eye" style="font-size:1.5rem; color:white;"></i></a>
-            </td>              
-          </tr>
-          {% endfor %}
-      </tbody>
-  </table>
+<div class="boxcentral bg-light text-dark bg-opacity-50 cards__lista">
+  
+  {% for usuariosenha in usuariosenhas.items %}
+  <div class="card d-inline-block cards__lista">
+    <div class="card__imagem">
+      <i class="{{ usuariosenha.icon_passwordtype }}" style="font-size:4rem; color:black;"></i>
+    </div>
+    <div>
+      <div class="card__tag">
+          usuario:
+      </div>
+      <div class="card__info">
+          {{ usuariosenha.username_userpassword }}
+      </div>
+      <div class="card__botao">
+        <a class="btn btn-dark" href="{{url_for('visualizarUsuarioSenha',id=usuariosenha.cod_userpassword)}}"><i class="bi bi-eye" style="font-size:1rem; color:white;"></i></a>
+        <a class="btn btn-dark" target="_blank" href="http://www.{{usuariosenha.desc_passwordtype}}.com"><i class="bi bi-play" style="font-size:1rem; color:white;"></i></a>
+    </div>      
+    </div>
+    
+  </div>
+  {% endfor %}
 </div>
 <!-- navegação entre as páginas -->
 <div class="boxcentral bg-light p-2 text-dark bg-opacity-50">

@@ -24,9 +24,11 @@
     <div class="collapse" id="navbarToggleExternalContent">
       <div class="bg-dark p-4">
         <button type="button" class="btn btn-outline-light btn-lg bi bi-house" onclick="window.location.href = '/'"> Home</button>
-        <button type="button" class="btn btn-outline-light btn-lg bi bi-person" onclick="window.location.href = '/usuario'"> Usuários</button>
-        <button type="button" class="btn btn-outline-light btn-lg bi bi-people" onclick="window.location.href = '/tipousuario'"> Tipos Usuário</button>
-        <button type="button" class="btn btn-outline-light btn-lg bi-card-list" onclick="window.location.href = '/tiposenha'"> Tipos Senhas</button>
+        {% if(session['tipousuario_logado'] == 1)%}
+          <button type="button" class="btn btn-outline-light btn-lg bi bi-person" onclick="window.location.href = '/usuario'"> Usuários</button>
+          <button type="button" class="btn btn-outline-light btn-lg bi bi-people" onclick="window.location.href = '/tipousuario'"> Tipos Usuário</button>
+          <button type="button" class="btn btn-outline-light btn-lg bi-card-list" onclick="window.location.href = '/tiposenha'"> Tipos Senhas</button>
+        {% endif%}
         <button type="button" class="btn btn-outline-light btn-lg bi bi-key" onclick="window.location.href = '/usuarioSenha'"> Senhas</button>
         <button type="button" class="btn btn-outline-light btn-lg bi bi-box-arrow-right" onclick="window.location.href = '/logout'"> Logout</button>
       </div>

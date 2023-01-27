@@ -18,8 +18,12 @@ from helpers import \
     FormularioTipoSenhaVisualizar,\
     FormularioUsuarioSenhaEdicao,\
     FormularioUsuarioSenhaVisualizar
-
+# ITENS POR PÁGINA
 from config import ROWS_PER_PAGE 
+
+# PARA O GERADOR DE SENHA SEGURA
+from random import choice
+import string
 
 
 # rota index
@@ -115,6 +119,7 @@ def visualizarUsuario(id):
     form.status.data = usuario.status_user
     form.login.data = usuario.login_user
     form.tipousuario.data = usuario.cod_usertype
+    form.email.data = usuario.email_user
     return render_template('visualizarUsuario.html', titulo='Visualizar Usuário', id=id, form=form)   
 
 # rota para editar formulário usuário 
@@ -128,6 +133,7 @@ def editarUsuario(id):
     form.status.data = usuario.status_user
     form.login.data = usuario.login_user
     form.tipousuario.data = usuario.cod_usertype
+    form.email.data = usuario.email_user
     return render_template('editarUsuario.html', titulo='Editar Usuário', id=id, form=form)    
        
 # rota para criar usuário no banco de dados
@@ -137,16 +143,18 @@ def criarUsuario():
         return redirect(url_for('login',proxima=url_for('criarUsuario')))      
     form = FormularioUsuario(request.form)
     if not form.validate_on_submit():
-        return redirect(url_for('novo'))
+        return redirect(url_for('novoUsuario'))
     nome  = form.nome.data
     status = form.status.data
     login = form.login.data
     tipousuario = form.tipousuario.data
+    email = form.email.data
+    senha = "teste@12345"
     usuario = tb_user.query.filter_by(name_user=nome).first()
     if usuario:
         flash ('Usuário já existe')
         return redirect(url_for('index')) 
-    novoUsuario = tb_user(nome_user=nome, status_user=status, login_user=login, cod_usertype=tipousuario)
+    novoUsuario = tb_user(name_user=nome, status_user=status, login_user=login, cod_usertype=tipousuario, password_user=senha, email_user=email)
     db.session.add(novoUsuario)
     db.session.commit()
 
@@ -156,7 +164,7 @@ def criarUsuario():
     #deleta_arquivos(usuario.cod_usuario)
     #arquivo.save(f'{uploads_path}/foto{usuario.cod_usuario}-{timestamp}.jpg')
 
-#    return redirect(url_for('usuario'))
+    return redirect(url_for('usuario'))
 
 # rota para atualizar usuário no banco de dados
 @app.route('/atualizarUsuario', methods=['POST',])
@@ -410,10 +418,14 @@ def usuarioSenhaPesquisa():
         return redirect(url_for('login',proxima=url_for('usuarioSenhaPesquisa')))    
     page = request.args.get('page', 1, type=int)
     form = FormularPesquisa()
-    usuariosenhas = tb_userpassword.query.order_by(tb_userpassword.date_userpassword)\
-    .filter(tb_userpassword.desc_passwordtype.ilike(f'%{form.pesquisa.data}%'))\
+    usuariosenhas = tb_userpassword.query\
+    .join(tb_passwordtype, tb_passwordtype.cod_passwordtype==tb_userpassword.cod_passwordtype)\
+    .add_columns(tb_passwordtype.icon_passwordtype, tb_passwordtype.desc_passwordtype, tb_userpassword.cod_userpassword, tb_userpassword.username_userpassword)\
+    .filter(tb_userpassword.cod_user==session['coduser_logado'])\
+    .filter(tb_passwordtype.desc_passwordtype.ilike(f'%{form.pesquisa.data}%'))\
+    .order_by(tb_userpassword.date_userpassword)\
     .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
-    return render_template('usuariosenhas.html', titulo='Tipo Senha' , usuariosenhas=usuariosenhas, form=form)
+    return render_template('usuariosenhas.html', titulo='Senha' , usuariosenhas=usuariosenhas, form=form)
 
 # rota para criar formulário de criação de senha
 @app.route('/novoUsuarioSenha')
@@ -431,7 +443,7 @@ def criarUsuarioSenha():
         return redirect(url_for('login',proxima=url_for('criarUsuarioSenha')))      
     form = FormularioUsuarioSenhaEdicao(request.form)
     if not form.validate_on_submit():
-        return redirect(url_for('criarS'))
+        return redirect(url_for('criarUsuarioSenha'))
     usuario  = form.usuario.data
     senha = form.senha.data
     tipo = form.tipo.data
@@ -481,4 +493,15 @@ def atualizarUsuarioSenha():
         db.session.commit()
     return redirect(url_for('visualizarUsuarioSenha', id=id))   
 
- 
+ #---------------------------------------------------------------------------------------------------------------------------------
+# GERADOR DE SENHA SEGURA
+#---------------------------------------------------------------------------------------------------------------------------------
+# rota para editar formulário tipo usuário 
+@app.route('/geradorSenhaSegura/<int:id>')
+def geradorSenhaSegura(tamanho_da_senha):
+    caracteres = string.ascii_letters + string.digits + string.punctuation
+    senha_segura = ''
+    for i in range(tamanho_da_senha):
+        senha_segura += choice(caracteres)
+    print("A senha (segura) gerada é: ",senha_segura)
+    return senha_segura
