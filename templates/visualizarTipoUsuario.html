@@ -3,7 +3,7 @@
 <br>
 <!-- Padrão para desktop/notebook -->
 <div class="bg-dark justify-content-between boxtitulo">
-  <div class="col-md-4">{{ titulo }}</div>
+  <div class="bd-highlight col-lg text-left text-white font-weight-bold "><i class="bi bi-people" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Usuários"></i> {{ titulo }}</div>
   <div class="col-md-4 offset-md-4" style="text-align: right;">
     <a class="btn btn-primary" href="{{url_for('editarTipoUsuario',id=id)}}"><i class="bi bi-pencil" style="font-size:1.5rem; color:white;"></i></a>
     <a class="btn btn-danger" href="{{url_for('tipousuario')}}"><i class="bi bi-arrow-counterclockwise" style="font-size:1.5rem; color:white;"></i></a>  
@@ -11,7 +11,7 @@
 </div>
 <!-- Padrão para mobile -->
 <div class="boxtitulocombusca_responsivo bg-dark">
-  <div class="col-md-4">{{ titulo }}</div>
+  <div class="bd-highlight col-lg text-left text-white font-weight-bold "><i class="bi bi-people" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Usuários"></i> {{ titulo }}</div>
   <div class="col-md-4 offset-md-4" style="text-align: center;">
     <a class="btn btn-primary" href="{{url_for('editarTipoUsuario',id=id)}}"><i class="bi bi-pencil" style="font-size:1.5rem; color:white;"></i></a>
     <a class="btn btn-danger" href="{{url_for('tipousuario')}}"><i class="bi bi-arrow-counterclockwise" style="font-size:1.5rem; color:white;"></i></a>   

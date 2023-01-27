@@ -4,9 +4,8 @@
 <br>
 <form method="post" action="{{ url_for('usuarioPesquisa') }}" enctype="multipart/form-data" id="formulario">
   <div class="boxtitulocombusca bg-dark align-items-center">
-    <div class="p-2 bd-highlight col-lg text-center text-white font-weight-bold "><i class="bi bi-person" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Usuários"></i></div>
-    <div class="p-2 bd-highlight col-lg text-left text-white font-weight-bold ">{{ titulo }}</div>
-    <div class="container w-25 input-group">{{form.pesquisa(class="form-control")}}</div>    
+    <div class="p-2 bd-highlight col-lg text-left text-white font-weight-bold "><i class="bi bi-person" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Usuários"></i> {{ titulo }}</div>
+    <div class="p-2 container w-25 input-group">{{form.pesquisa(class="form-control")}}</div>    
     <div class="p-2"><a class="btn btn-warning" href="#" onclick="myFunction()"><i class="bi bi-search" style="font-size:1.5rem; color:white;"></i></a></div>
     <div class="p-2"><a class="btn btn-danger" href="{{url_for('usuario')}}"><i class="bi bi-eraser" style="font-size:1.5rem; color:white;"></i></a></div>
     <div class="p-2"><a class="btn btn-success" href="{{url_for('novoUsuario')}}"><i class="bi bi-file-earmark-plus" style="font-size:1.5rem; color:white;"></i></a></div>
