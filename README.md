@@ -7,10 +7,11 @@ Essas instruções permitirão que você obtenha uma cópia do projeto em opera�
 
 # :wrench: Pré-requisitos e instalações:
 Para começar, verifique a instalação dos seguintes itens:
-- Python 
-- Flask
-- SQLAlchemy
-- Mysql
+- [X] Python 
+- [X] Flask
+- [X] SQLAlchemy
+- [X] Mysql
+- [X] Pycrypdome - pip install pycryptodome
 
 # :hammer_and_wrench: Construído com:
 - VsCode

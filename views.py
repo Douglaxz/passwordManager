@@ -19,12 +19,19 @@ from helpers import \
     FormularioUsuarioSenhaEdicao,\
     FormularioUsuarioSenhaVisualizar
 # ITENS POR PÁGINA
-from config import ROWS_PER_PAGE 
+from config import ROWS_PER_PAGE, CHAVE
 
 # PARA O GERADOR DE SENHA SEGURA
 from random import choice
 import string
 
+#ENCRIPTAR SENHA
+from bcrypt import gensalt, hashpw, checkpw
+
+ 
+BLOCK_SIZE = 16
+pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * chr(BLOCK_SIZE - len(s) % BLOCK_SIZE)
+unpad = lambda s: s[:-ord(s[len(s) - 1:])]
 
 # rota index
 @app.route('/')
@@ -50,6 +57,17 @@ def login():
 def autenticar():
     usuario = tb_user.query.filter_by(login_user=request.form['usuario']).first()
     if usuario:
+        if checkpw(usuario.password_user.encode('utf-8'), request.form['senha'] )
+            session['usuario_logado'] = usuario.login_user
+            session['nomeusuario_logado'] = usuario.name_user
+            session['tipousuario_logado'] = usuario.cod_usertype
+            session['coduser_logado'] = usuario.cod_user
+            flash(usuario.name_user + ' Usuário logado com sucesso')
+            return redirect('/')
+        else:
+            flash('Usuário não logado com sucesso')
+            return redirect(url_for('login'))
+            #parou aqui, ativar os 2 modulos, com encriptação, sem encriptação
         if request.form['senha'] == usuario.password_user:
             session['usuario_logado'] = usuario.login_user
             session['nomeusuario_logado'] = usuario.name_user
@@ -149,7 +167,9 @@ def criarUsuario():
     login = form.login.data
     tipousuario = form.tipousuario.data
     email = form.email.data
-    senha = "teste@12345"
+    #criptografar senha
+    senha = hashpw('teste@12345'.encode('utf-8'), gensalt(12))
+   
     usuario = tb_user.query.filter_by(name_user=nome).first()
     if usuario:
         flash ('Usuário já existe')
@@ -157,12 +177,6 @@ def criarUsuario():
     novoUsuario = tb_user(name_user=nome, status_user=status, login_user=login, cod_usertype=tipousuario, password_user=senha, email_user=email)
     db.session.add(novoUsuario)
     db.session.commit()
-
-    #arquivo = request.files['arquivo']
-    #uploads_path = app.config['UPLOAD_PATH']
-    #timestamp = time.time
-    #deleta_arquivos(usuario.cod_usuario)
-    #arquivo.save(f'{uploads_path}/foto{usuario.cod_usuario}-{timestamp}.jpg')
 
     return redirect(url_for('usuario'))
 
