@@ -16,7 +16,8 @@ from helpers import \
     FormularioTipoUsuarioVisualizar,\
     FormularioTipoSenhaEdicao,\
     FormularioTipoSenhaVisualizar,\
-    FormularioUsuarioSenhaEdicao
+    FormularioUsuarioSenhaEdicao,\
+    FormularioUsuarioSenhaVisualizar
 
 from config import ROWS_PER_PAGE 
 
@@ -396,7 +397,7 @@ def usuarioSenha():
     form = FormularPesquisa()    
     usuariosenhas = tb_userpassword.query.order_by(tb_userpassword.date_userpassword)\
     .join(tb_passwordtype, tb_passwordtype.cod_passwordtype==tb_userpassword.cod_passwordtype)\
-    .add_columns(tb_passwordtype.icon_passwordtype, tb_userpassword.cod_userpassword, tb_userpassword.username_userpassword)\
+    .add_columns(tb_passwordtype.icon_passwordtype, tb_passwordtype.desc_passwordtype, tb_userpassword.cod_userpassword, tb_userpassword.username_userpassword)\
     .filter(tb_userpassword.cod_user==session['coduser_logado'])\
     .order_by(tb_userpassword.date_userpassword)\
     .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
@@ -441,9 +442,43 @@ def criarUsuarioSenha():
     db.session.commit()
     return redirect(url_for('usuarioSenha'))
 
-@app.route('/visualizarUsuarioSenha', methods=['POST',])
-def visualizarUsuarioSenha():
-    pass
+@app.route('/visualizarUsuarioSenha/<int:id>')
+def visualizarUsuarioSenha(id):
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('visualizarTipoSenha')))
+    usuariosenha = tb_userpassword.query.filter_by(cod_userpassword=id).first()
+    form = FormularioUsuarioSenhaVisualizar()
+    form.usuario.data = usuariosenha.username_userpassword
+    form.senha.data = usuariosenha.password_userpassword
+    form.tipo.data = usuariosenha.cod_passwordtype
+    return render_template('visualizarUsuarioSenha.html', titulo='Visualizar Senha', id=id, form=form)
 
+# rota para editar formulário tipo usuário 
+@app.route('/editarUsuarioSenha/<int:id>')
+def editarUsuarioSenha(id):
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('editarTipoSenha')))    
+    usuariosenha = tb_userpassword.query.filter_by(cod_userpassword=id).first()
+    form = FormularioUsuarioSenhaEdicao()
+    form.usuario.data = usuariosenha.username_userpassword
+    form.senha.data = usuariosenha.password_userpassword
+    form.tipo.data = usuariosenha.cod_passwordtype
+    return render_template('editarUsuarioSenha.html', titulo='Editar Senha', id=id, form=form)   
+
+# rota para atualizar usuário no banco de dados
+@app.route('/atualizarUsuarioSenha', methods=['POST',])
+def atualizarUsuarioSenha():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('atualizarTipoSenha')))        
+    form = FormularioUsuarioSenhaEdicao(request.form)
+    if form.validate_on_submit():
+        id = request.form['id']
+        usuariosenha = tb_userpassword.query.filter_by(cod_userpassword=id).first()
+        usuariosenha.username_userpassword = form.usuario.data
+        usuariosenha.password_userpassword = form.senha.data
+        usuariosenha.cod_passwordtype = form.tipo.data
+        db.session.add(usuariosenha)
+        db.session.commit()
+    return redirect(url_for('visualizarUsuarioSenha', id=id))   
 
  
