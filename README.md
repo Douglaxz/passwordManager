@@ -32,9 +32,10 @@ Para começar, verifique a instalação dos seguintes itens:
 - [X] Funcionalidade template
 - [X] Funcionalidade usuário
 - [X] Funcionalidade tipo de usuário
-- [ ] Funcionalidade tipo senha
+- [x] Funcionalidade tipo senha
 - [ ] Funcionalidade senha
 - [ ] Gerar senha
+- [ ] Sugerir alteração da senha depois de algum tempo cadastrada (3 meses)
 
 # :paperclips: Colaborando:
 - Rodrigo Freitas (@Rodjfreitas)- Dicas de frontend @rodrigo

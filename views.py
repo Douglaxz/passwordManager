@@ -1,5 +1,5 @@
 # importação de dependencias
-from datetime import datetime
+from datetime import datetime, date
 from flask import Flask, render_template, request, redirect, session, flash, url_for, send_from_directory
 import time
 from datetime import date, timedelta
@@ -24,8 +24,8 @@ from config import ROWS_PER_PAGE
 # rota index
 @app.route('/')
 def index():
-    #if session['usuario_logado'] == None:
-    #    return redirect(url_for('login',proxima=url_for('novoUsuario')))    
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('/')))        
     return render_template('index.html', titulo='Bem vindos')
 
 # rota logout
@@ -38,14 +38,12 @@ def logout():
  #rota para a tela de login
 @app.route('/login')
 def login():
-    #proxima = request.args.get('proxima')
     return render_template('login.html')
 
 # rota para autendicar a tela de login
 @app.route('/autenticar', methods = ['GET', 'POST'])
 def autenticar():
     usuario = tb_user.query.filter_by(login_user=request.form['usuario']).first()
-    
     if usuario:
         if request.form['senha'] == usuario.password_user:
             session['usuario_logado'] = usuario.login_user
@@ -69,6 +67,8 @@ def autenticar():
 # rota index para mostrar os usuários
 @app.route('/usuario')
 def usuario():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('usuario')))        
     form = FormularPesquisa()
     page = request.args.get('page', 1, type=int)
     usuarios = tb_user.query\
@@ -81,6 +81,8 @@ def usuario():
 # rota index para mostrar pesquisa usuários
 @app.route('/usuarioPesquisa', methods=['POST',])
 def usuarioPesquisa():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('usuarioPesquisa')))        
     page = request.args.get('page', 1, type=int)
     form = FormularPesquisa()
     usuarios = tb_user.query\
@@ -94,6 +96,8 @@ def usuarioPesquisa():
 # rota para criar novo formulário usuário 
 @app.route('/novoUsuario')
 def novoUsuario():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('novoUsuario')))     
     if session['usuario_logado'] == None:
         return redirect(url_for('login',proxima=url_for('novoUsuario')))
     form = FormularioUsuario()
@@ -102,8 +106,8 @@ def novoUsuario():
 # rota para visualizar usuário 
 @app.route('/visualizarUsuario/<int:id>')
 def visualizarUsuario(id):
-    if session['usuario_logado'] == None:
-        return redirect(url_for('login',proxima=url_for('visualizarUsuario')))
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('visualizarUsuario')))    
     usuario = tb_user.query.filter_by(cod_user=id).first()
     form = FormularioUsuarioVisualizar()
     form.nome.data = usuario.name_user
@@ -115,8 +119,8 @@ def visualizarUsuario(id):
 # rota para editar formulário usuário 
 @app.route('/editarUsuario/<int:id>')
 def editarUsuario(id):
-    if session['usuario_logado'] == None:
-        return redirect(url_for('login',proxima=url_for('visualizarUsuario')))
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('editarUsuario/<int:id>')))  
     usuario = tb_user.query.filter_by(cod_user=id).first()
     form = FormularioUsuario()
     form.nome.data = usuario.name_user
@@ -128,6 +132,8 @@ def editarUsuario(id):
 # rota para criar usuário no banco de dados
 @app.route('/criarUsuario', methods=['POST',])
 def criarUsuario():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('criarUsuario')))      
     form = FormularioUsuario(request.form)
     if not form.validate_on_submit():
         return redirect(url_for('novo'))
@@ -154,6 +160,8 @@ def criarUsuario():
 # rota para atualizar usuário no banco de dados
 @app.route('/atualizarUsuario', methods=['POST',])
 def atualizarUsuario():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('atualizarUsuario')))          
     form = FormularioUsuario(request.form)
     if form.validate_on_submit():
         id = request.form['id']
@@ -188,6 +196,8 @@ def atualizarUsuario():
 # rota index para mostrar os tipo usuários
 @app.route('/tipousuario')
 def tipousuario():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('tipousuario')))         
     page = request.args.get('page', 1, type=int)
     form = FormularPesquisa()    
     tiposusuario = tb_usertype.query.order_by(tb_usertype.desc_usertype)\
@@ -197,6 +207,8 @@ def tipousuario():
 # rota index para mostrar pesquisa dos tipo usuários
 @app.route('/tipousuarioPesquisa', methods=['POST',])
 def tipousuarioPesquisa():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('tipousuarioPesquisa')))      
     page = request.args.get('page', 1, type=int)
     form = FormularPesquisa()
     tiposusuario = tb_usertype.query.order_by(tb_usertype.desc_usertype)\
@@ -207,14 +219,16 @@ def tipousuarioPesquisa():
 # rota para criar novo formulário usuário 
 @app.route('/novoTipoUsuario')
 def novoTipoUsuario():
-    if session['usuario_logado'] == None:
-        return redirect(url_for('login',proxima=url_for('novoTipoUsuario')))
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('novoTipoUsuario'))) 
     form = FormularioTipoUsuarioEdicao()
     return render_template('novoTipoUsuario.html', titulo='Novo Tipo Usuário', form=form)
 
 # rota para criar tipo usuário no banco de dados
 @app.route('/criarTipoUsuario', methods=['POST',])
 def criarTipoUsuario():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('criarTipoUsuario')))     
     form = FormularioTipoUsuarioEdicao(request.form)
     if not form.validate_on_submit():
         return redirect(url_for('criarTipoUsuario'))
@@ -232,8 +246,8 @@ def criarTipoUsuario():
 # rota para visualizar tipo usuário 
 @app.route('/visualizarTipoUsuario/<int:id>')
 def visualizarTipoUsuario(id):
-    if session['usuario_logado'] == None:
-        return redirect(url_for('login',proxima=url_for('visualizarTipoUsuario')))
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('visualizarTipoUsuario')))  
     tipousuario = tb_usertype.query.filter_by(cod_usertype=id).first()
     form = FormularioTipoUsuarioVisualizar()
     form.descricao.data = tipousuario.desc_usertype
@@ -243,8 +257,8 @@ def visualizarTipoUsuario(id):
 # rota para editar formulário tipo usuário 
 @app.route('/editarTipoUsuario/<int:id>')
 def editarTipoUsuario(id):
-    if session['usuario_logado'] == None:
-        return redirect(url_for('login',proxima=url_for('visualizarTipoUsuario')))
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('editarTipoUsuario')))  
     tipousuario = tb_usertype.query.filter_by(cod_usertype=id).first()
     form = FormularioTipoUsuarioEdicao()
     form.descricao.data = tipousuario.desc_usertype
@@ -254,6 +268,8 @@ def editarTipoUsuario(id):
 # rota para atualizar usuário no banco de dados
 @app.route('/atualizarTipoUsuario', methods=['POST',])
 def atualizarTipoUsuario():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('atualizarTipoUsuario')))      
     form = FormularioTipoUsuarioEdicao(request.form)
     if form.validate_on_submit():
         id = request.form['id']
@@ -280,6 +296,8 @@ def atualizarTipoUsuario():
 # rota index para mostrar os tipos de senha
 @app.route('/tiposenha')
 def tiposenha():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('tiposenha')))      
     page = request.args.get('page', 1, type=int)
     form = FormularPesquisa()    
     tipossenha = tb_passwordtype.query.order_by(tb_passwordtype.desc_passwordtype)\
@@ -289,6 +307,8 @@ def tiposenha():
 # rota index para pesquisar os beneficios
 @app.route('/tiposenhaPesquisa', methods=['POST',])
 def tipossenhaPesquisa():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('tipossenhaPesquisa')))          
     page = request.args.get('page', 1, type=int)
     form = FormularPesquisa()
     tipossenha = tb_passwordtype.query.order_by(tb_passwordtype.desc_passwordtype)\
@@ -299,14 +319,16 @@ def tipossenhaPesquisa():
 # rota para criar novo formulário usuário 
 @app.route('/novoTipoSenha')
 def novoTipoSenha():
-    if session['usuario_logado'] == None:
-        return redirect(url_for('login',proxima=url_for('novoTipoUsuario')))
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('novoTipoSenha')))  
     form = FormularioTipoSenhaEdicao()
     return render_template('novoTipoSenha.html', titulo='Novo Tipo Senha', form=form)
 
 # rota para criar tipo usuário no banco de dados
 @app.route('/criarTipoSenha', methods=['POST',])
 def criarTipoSenha():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('criarTipoSenha')))     
     form = FormularioTipoSenhaEdicao(request.form)
     if not form.validate_on_submit():
         return redirect(url_for('criarTipoSenha'))
@@ -325,8 +347,8 @@ def criarTipoSenha():
 # rota para visualizar tipo usuário 
 @app.route('/visualizarTipoSenha/<int:id>')
 def visualizarTipoSenha(id):
-    if session['usuario_logado'] == None:
-        return redirect(url_for('login',proxima=url_for('visualizarTipoSenha')))
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('visualizarTipoSenha')))       
     tiposenha = tb_passwordtype.query.filter_by(cod_passwordtype=id).first()
     form = FormularioTipoSenhaVisualizar()
     form.descricao.data = tiposenha.desc_passwordtype
@@ -337,8 +359,8 @@ def visualizarTipoSenha(id):
 # rota para editar formulário tipo usuário 
 @app.route('/editarTipoSenha/<int:id>')
 def editarTipoSenha(id):
-    if session['usuario_logado'] == None:
-        return redirect(url_for('login',proxima=url_for('visualizarTipoSenha')))
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('editarTipoSenha')))    
     tiposenha = tb_passwordtype.query.filter_by(cod_passwordtype=id).first()
     form = FormularioTipoSenhaEdicao()
     form.descricao.data = tiposenha.desc_passwordtype
@@ -349,6 +371,8 @@ def editarTipoSenha(id):
 # rota para atualizar usuário no banco de dados
 @app.route('/atualizarTipoSenha', methods=['POST',])
 def atualizarTipoSenha():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('atualizarTipoSenha')))        
     form = FormularioTipoSenhaEdicao(request.form)
     if form.validate_on_submit():
         id = request.form['id']
@@ -366,6 +390,8 @@ def atualizarTipoSenha():
 # rota index para mostrar as senhas do
 @app.route('/usuarioSenha')
 def usuarioSenha():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('usuarioSenha')))      
     page = request.args.get('page', 1, type=int)
     form = FormularPesquisa()    
     usuariosenhas = tb_userpassword.query.order_by(tb_userpassword.date_userpassword)\
@@ -379,6 +405,8 @@ def usuarioSenha():
 # rota index para pesquisar os beneficios
 @app.route('/usuarioSenhaPesquisa', methods=['POST',])
 def usuarioSenhaPesquisa():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('usuarioSenhaPesquisa')))    
     page = request.args.get('page', 1, type=int)
     form = FormularPesquisa()
     usuariosenhas = tb_userpassword.query.order_by(tb_userpassword.date_userpassword)\
@@ -389,24 +417,26 @@ def usuarioSenhaPesquisa():
 # rota para criar formulário de criação de senha
 @app.route('/novoUsuarioSenha')
 def novoUsuarioSenha():
-    if session['usuario_logado'] == None:
-        return redirect(url_for('login',proxima=url_for('novoTipoUsuario')))
-    form = FormularioTipoSenhaEdicao()
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('novoUsuarioSenha')))  
+    form = FormularioUsuarioSenhaEdicao()
     return render_template('novoUsuarioSenha.html', titulo='Nova senha', form=form)
 
 
 # rota para criar tipo usuário no banco de dados
 @app.route('/criarUsuarioSenha', methods=['POST',])
 def criarUsuarioSenha():
-    form = FormularioTipoSenhaEdicao(request.form)
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('criarUsuarioSenha')))      
+    form = FormularioUsuarioSenhaEdicao(request.form)
     if not form.validate_on_submit():
         return redirect(url_for('criarS'))
     usuario  = form.usuario.data
     senha = form.senha.data
     tipo = form.tipo.data
-    data = date
-    usuario = session['coduser_logado']
-    novoUsuarioSenha = tb_userpassword(cod_passwordtype=tipo, username_userpassword=usuario, password_userpassword=senha, date_userpassword=data,cod_user=usuario)
+    data = date.today()
+    userlogado = session['coduser_logado']
+    novoUsuarioSenha = tb_userpassword(cod_passwordtype=tipo, username_userpassword=usuario, password_userpassword=senha, date_userpassword=data,cod_user=userlogado)
     db.session.add(novoUsuarioSenha)
     db.session.commit()
     return redirect(url_for('usuarioSenha'))

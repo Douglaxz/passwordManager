@@ -4,7 +4,7 @@
 <br>
 <form method="post" action="{{ url_for('usuarioSenhaPesquisa') }}" enctype="multipart/form-data" id="formulario">
   <div class="boxtitulocombusca bg-dark align-items-center">
-    <div class="p-2 bd-highlight col-lg text-center text-white font-weight-bold "><i class="bi bi-people" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Tipos de Usuários"></i></div>
+    <div class="p-2 bd-highlight col-lg text-center text-white font-weight-bold "><i class="bi bi-key" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Tipos de Usuários"></i></div>
     <div class="p-2 bd-highlight col-lg text-left text-white font-weight-bold ">{{ titulo }}</div>
     <div class="container w-25 input-group">{{form.pesquisa(class="form-control")}}</div>    
     <div class="p-2"><a class="btn btn-warning" href="#" onclick="myFunction()"><i class="bi bi-search" style="font-size:1.5rem; color:white;"></i></a></div>
@@ -26,7 +26,7 @@
   <table class="table table-striped table-responsiv">
       <thead class="bg-dark text-white">
           <tr>
-              <th class="text-left col-md-6">Tipo</th>
+              <th class="text-left col-md-6">Plataforma</th>
               <th class="text-left col-md-2">Icone</th>
               <th class="text-left col-md-2">Status</th>
               <th class="text-left col-md-2">Ações</th>
