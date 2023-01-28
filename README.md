@@ -12,6 +12,7 @@ Para começar, verifique a instalação dos seguintes itens:
 - [X] SQLAlchemy
 - [X] Mysql
 - [X] Flask Bcrypt  - pip install flask-bcript
+- [X] Werkzeug - pip install Werkzeug
 
 # :hammer_and_wrench: Construído com:
 - VsCode

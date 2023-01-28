@@ -21,6 +21,7 @@ from helpers import \
     FormularioUsuarioTrocarSenha
 # ITENS POR PÁGINA
 from config import ROWS_PER_PAGE, CHAVE
+from flask_bcrypt import generate_password_hash, Bcrypt, check_password_hash
 
 
  
@@ -39,7 +40,7 @@ def index():
 @app.route('/logout', methods = ['GET', 'POST'])
 def logout():
     session['usuario_logado'] = None
-    flash('logout efetuado com sucesso')
+    flash('logout efetuado com sucesso','success')
     return redirect(url_for('login'))
 
  #rota para a tela de login
@@ -51,19 +52,20 @@ def login():
 @app.route('/autenticar', methods = ['GET', 'POST'])
 def autenticar():
     usuario = tb_user.query.filter_by(login_user=request.form['usuario']).first()
+    senha = check_password_hash(usuario.password_user,request.form['senha'])
     if usuario:
-        if request.form['senha'] == usuario.password_user:
+        if senha:
             session['usuario_logado'] = usuario.login_user
             session['nomeusuario_logado'] = usuario.name_user
             session['tipousuario_logado'] = usuario.cod_usertype
             session['coduser_logado'] = usuario.cod_user
-            flash(usuario.name_user + ' Usuário logado com sucesso')
+            flash(usuario.name_user + ' Usuário logado com sucesso','success')
             return redirect('/')
         else:
-            flash('Usuário não logado com sucesso')
+            flash('Usuário não logado com sucesso', 'danger')
             return redirect(url_for('login'))
     else:
-        flash('Usuário não logado com sucesso')
+        flash('Usuário não logado com sucesso','success')
         return redirect(url_for('login'))
 
 
@@ -200,21 +202,21 @@ def trocarSenhaUsuario():
         id = session['coduser_logado']
         usuario = tb_user.query.filter_by(cod_user=id).first()
         if form.senhaatual.data != usuario.password_user:
-            flash('senha atual incorreta')
+            flash('senha atual incorreta','danger')
             return redirect(url_for('editarSenhaUsuario'))
 
         if form.senhaatual.data != usuario.password_user:
-            flash('senha atual incorreta')
+            flash('senha atual incorreta','danger')
             return redirect(url_for('editarSenhaUsuario')) 
 
         if form.novasenha1.data != form.novasenha2.data:
-            flash('novas senhas não coincidem')
+            flash('novas senhas não coincidem','danger')
             return redirect(url_for('editarSenhaUsuario')) 
         
-        usuario.password_user = form.novasenha1.data
+        usuario.password_user = generate_password_hash(form.novasenha1.data).decode('utf-8')
         db.session.add(usuario)
         db.session.commit()
-        flash('senha alterada com sucesso!')
+        flash('senha alterada com sucesso!','success')
         return redirect(url_for('editarSenhaUsuario')) 
 
 # rota para deletar usuário no banco de dados

@@ -45,16 +45,18 @@
   </div>
 </header>
 <body>
-  <div class="container" style="min-height: 720px">
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul id="messages" class="list-unstyled">
-          {% for message in messages %}
-            <li class="alert alert-success">{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
+  <div class="container" style="min-height: 620px"> 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+      <br>
+      <div class="p-3 mb-1 bg-{{category}} text-white" role="alert">
+        {{ message }}
+      </div>   
+      {% endfor %}
+    
+    {% endif %}
+  {% endwith %}
     {% block conteudo %} 
     {% endblock%}
   </div>
