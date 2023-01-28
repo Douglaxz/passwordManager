@@ -34,6 +34,13 @@ class FormularioUsuarioVisualizar(FlaskForm):
     email = EmailField('Email:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={'readonly': True})
     salvar = SubmitField('Editar')    
 
+#criação via wftorm do formulario de usuarios
+class FormularioUsuarioTrocarSenha(FlaskForm):
+    senhaatual = PasswordField('Senha Atual:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    novasenha1 = PasswordField('Nova Senha:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    novasenha2 = PasswordField('Confirme Nova Senha:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    salvar = SubmitField('Editar')  
+
 #------------------------------------------------------------------------------------------------------------------------------
 #TIPO USUÁRIO
 #------------------------------------------------------------------------------------------------------------------------------

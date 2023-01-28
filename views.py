@@ -17,12 +17,10 @@ from helpers import \
     FormularioTipoSenhaEdicao,\
     FormularioTipoSenhaVisualizar,\
     FormularioUsuarioSenhaEdicao,\
-    FormularioUsuarioSenhaVisualizar
+    FormularioUsuarioSenhaVisualizar,\
+    FormularioUsuarioTrocarSenha
 # ITENS POR PÁGINA
 from config import ROWS_PER_PAGE, CHAVE
-
-# PARA O GERADOR DE SENHA SEGURA
-from flask_bcrypt import generate_password_hash, check_password_hash
 
 
  
@@ -53,30 +51,7 @@ def login():
 @app.route('/autenticar', methods = ['GET', 'POST'])
 def autenticar():
     usuario = tb_user.query.filter_by(login_user=request.form['usuario']).first()
-    #verificacaoSenha = hashpw(request.form['senha'].encode('utf-8'), gensalt(12))
-
-    
-
-    pw_hash = generate_password_hash(request.form['senha'] , 10)
-    
-    
-    return str(check_password_hash(pw_hash, usuario.password_user)) # returns True
-
-
-    
-
     if usuario:
-        if bcryptObj.check_password_hash(hashPassword, usuario.password_user):
-            session['usuario_logado'] = usuario.login_user
-            session['nomeusuario_logado'] = usuario.name_user
-            session['tipousuario_logado'] = usuario.cod_usertype
-            session['coduser_logado'] = usuario.cod_user
-            flash(usuario.name_user + ' Usuário logado com sucesso')
-            return redirect('/')
-        else:
-            flash('Usuário não logado com sucesso')
-            return redirect(url_for('login'))
-            #parou aqui, ativar os 2 modulos, com encriptação, sem encriptação
         if request.form['senha'] == usuario.password_user:
             session['usuario_logado'] = usuario.login_user
             session['nomeusuario_logado'] = usuario.name_user
@@ -177,7 +152,8 @@ def criarUsuario():
     tipousuario = form.tipousuario.data
     email = form.email.data
     #criptografar senha
-    senha = hashpw('teste@12345'.encode('utf-8'), gensalt(12))
+    #senha = hashpw('teste@12345'.encode('utf-8'), gensalt(12))
+    senha = "teste@12345"
    
     usuario = tb_user.query.filter_by(name_user=nome).first()
     if usuario:
@@ -205,6 +181,41 @@ def atualizarUsuario():
         db.session.add(usuario)
         db.session.commit()
     return redirect(url_for('visualizarUsuario', id=id))
+
+# rota para visualizar usuário 
+@app.route('/editarSenhaUsuario/')
+def editarSenhaUsuario():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('visualizarUsuario')))    
+    form = FormularioUsuarioTrocarSenha()
+    return render_template('trocarsenha.html', titulo='Trocar Senha', id=id, form=form)  
+
+# rota para atualizar usuário no banco de dados
+@app.route('/trocarSenhaUsuario', methods=['POST',])
+def trocarSenhaUsuario():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect(url_for('login',proxima=url_for('atualizarUsuario')))          
+    form = FormularioUsuarioTrocarSenha(request.form)
+    if form.validate_on_submit():
+        id = session['coduser_logado']
+        usuario = tb_user.query.filter_by(cod_user=id).first()
+        if form.senhaatual.data != usuario.password_user:
+            flash('senha atual incorreta')
+            return redirect(url_for('editarSenhaUsuario'))
+
+        if form.senhaatual.data != usuario.password_user:
+            flash('senha atual incorreta')
+            return redirect(url_for('editarSenhaUsuario')) 
+
+        if form.novasenha1.data != form.novasenha2.data:
+            flash('novas senhas não coincidem')
+            return redirect(url_for('editarSenhaUsuario')) 
+        
+        usuario.password_user = form.novasenha1.data
+        db.session.add(usuario)
+        db.session.commit()
+        flash('senha alterada com sucesso!')
+        return redirect(url_for('editarSenhaUsuario')) 
 
 # rota para deletar usuário no banco de dados
 #@app.route('/deletarUsuario/<int:id>')

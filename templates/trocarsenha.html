@@ -1,0 +1,38 @@
+{% extends "template.html"%}
+{% block conteudo %}
+<form method="post" action="{{ url_for('trocarSenhaUsuario') }}" enctype="multipart/form-data" id="formulario">
+  <br>
+      <!-- Padrão para desktop/notebook -->
+      <div class="boxtitulo bg-dark justify-content-between">
+        <div class="bd-highlight col-lg text-left text-white font-weight-bold "><i class="bi bi-briefcase" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Usuários"></i> {{ titulo }}</div>
+        <div class="col-md-4 offset-md-4" style="text-align: right;">
+          <a class="btn btn-primary" href="#" onclick="myFunction()"><i class="bi bi-save" style="font-size:1.5rem; color:white;"></i></a>
+        </div>
+      </div>
+      <!-- Padrão para mobile -->
+      <div class="boxtitulocombusca_responsivo bg-dark">
+        <div class="bd-highlight col-lg text-left text-white font-weight-bold "><i class="bi bi-person" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Usuários"></i> {{ titulo }}</div>
+        <div class="col-md-4 offset-md-4" style="text-align: center;">
+          <a class="btn btn-primary" href="#" onclick="myFunction()"><i class="bi bi-save" style="font-size:1.5rem; color:white;"></i></a>
+        </div>
+      </div>
+      <!-- conteudo -->
+  <div class="boxformulario bg-light p-2 text-dark bg-opacity-50">
+    <fieldset>
+      {{form.csrf_token()}}
+      <div class="form-group">
+        {{form.senhaatual.label(class="form-label")}}
+        {{form.senhaatual(class="form-control")}}
+      </div>
+      <div class="form-group">
+        {{form.novasenha1.label(class="form-label")}}
+        {{form.novasenha1(class="form-control")}}
+      </div>
+      <div class="form-group">
+        {{form.novasenha2.label(class="form-label")}}
+        {{form.novasenha2(class="form-control")}}
+      </div>
+    </fieldset>
+  </div>
+</form>
+{% endblock%}
