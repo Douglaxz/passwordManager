@@ -22,11 +22,8 @@ from helpers import \
 from config import ROWS_PER_PAGE, CHAVE
 
 # PARA O GERADOR DE SENHA SEGURA
-from random import choice
-import string
+from flask_bcrypt import generate_password_hash, check_password_hash
 
-#ENCRIPTAR SENHA
-from bcrypt import gensalt, hashpw, checkpw
 
  
 BLOCK_SIZE = 16
@@ -56,8 +53,20 @@ def login():
 @app.route('/autenticar', methods = ['GET', 'POST'])
 def autenticar():
     usuario = tb_user.query.filter_by(login_user=request.form['usuario']).first()
+    #verificacaoSenha = hashpw(request.form['senha'].encode('utf-8'), gensalt(12))
+
+    
+
+    pw_hash = generate_password_hash(request.form['senha'] , 10)
+    
+    
+    return str(check_password_hash(pw_hash, usuario.password_user)) # returns True
+
+
+    
+
     if usuario:
-        if checkpw(usuario.password_user.encode('utf-8'), request.form['senha'] )
+        if bcryptObj.check_password_hash(hashPassword, usuario.password_user):
             session['usuario_logado'] = usuario.login_user
             session['nomeusuario_logado'] = usuario.name_user
             session['tipousuario_logado'] = usuario.cod_usertype
