@@ -37,8 +37,12 @@ Para começar, verifique a instalação dos seguintes itens:
 - [X] Funcionalidade tipo senha
 - [X] Funcionalidade senha
 - [X] Visualização por tipo de funcionário (Admnistrador/Usuário)
-- [ ] Gerar senha
+- [X] Encriptar senha de acesso ao sistma
+- [ ] Gerar senhas inteligentes
 - [ ] Sugerir alteração da senha depois de algum tempo cadastrada (3 meses)
+- [ ] Placeholder dos formulários
+- [ ] Alerta dos formulários pelo wtrforms
+
 
 # :paperclips: Colaborando:
 - Rodrigo Freitas (@Rodjfreitas)- Dicas de frontend @rodrigo
