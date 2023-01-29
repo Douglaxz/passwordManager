@@ -33,7 +33,7 @@ from flask_bcrypt import generate_password_hash, Bcrypt, check_password_hash
 @app.route('/')
 def index():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect(url_for('login',proxima=url_for('/')))        
+        return redirect(url_for('login'))        
     return render_template('index.html', titulo='Bem vindos')
 
 # rota logout
