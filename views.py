@@ -543,7 +543,10 @@ def visualizarUsuarioSenha(id):
     form.usuario.data = usuariosenha.username_userpassword
     form.senha.data = usuariosenha.password_userpassword
     form.tipo.data = usuariosenha.cod_passwordtype
-    return render_template('visualizarUsuarioSenha.html', titulo='Visualizar Senha', id=id, form=form)
+    data = usuariosenha.date_userpassword.date()
+    dias =  abs((date.today() - data).days)
+    percentual = int(abs(dias/90)*100)
+    return render_template('visualizarUsuarioSenha.html', titulo='Visualizar Senha', id=id, form=form, percentual=percentual)
 
 # rota para editar formulário tipo usuário 
 @app.route('/editarUsuarioSenha/<int:id>')
@@ -571,6 +574,7 @@ def atualizarUsuarioSenha():
         usuariosenha.username_userpassword = form.usuario.data
         usuariosenha.password_userpassword = form.senha.data
         usuariosenha.cod_passwordtype = form.tipo.data
+        usuariosenha.date_userpassword = date.today()
         db.session.add(usuariosenha)
         db.session.commit()
     else:

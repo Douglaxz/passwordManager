@@ -35,6 +35,15 @@
       {{form.tipo.label(class="form-label")}}
       {{form.tipo(class="form-control readonly")}}
     </div>
+    <div class="form-group">
+  
+      Recomendamos a troca da senha em {{90 - percentual}} dias
+      <br>
+    </div>    
+    <div class="progress">
+  
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{percentual}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentual}}%"></div>
+    </div>   
   </fieldset>  
 </div>
 {% endblock%}
