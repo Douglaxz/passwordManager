@@ -17,7 +17,6 @@
       {{ message }}
     </div>   
     {% endfor %}
-  
   {% endif %}
 {% endwith %}
   <div class="container_login">
@@ -44,18 +43,18 @@
             </ul>
           </div>
           <p class="description description-second">ou utilize seu email para registro</p>
-          <form class="formlogin" method="POST" action="{{url_for('autenticar')}}">
+          <form class="formlogin" method="POST" action="{{url_for('criarUsuarioexterno')}}">
             <label class="label-input">
               <i class="bi bi-person icon-modify" style="font-size:1rem; color:black;"></i>
-              <input type="text" placeholder="nome" name="usuario">
+              <input type="text" placeholder="nome" name="nome" required>
             </label>
             <label class="label-input">
               <i class="bi bi-envelope icon-modify" style="font-size:1rem; color:black;"></i>
-              <input type="email" placeholder="email" name="senha">
+              <input type="email" placeholder="email" name="email" required>
             </label>
             <label class="label-input">
               <i class="bi bi-lock icon-modify" style="font-size:1rem; color:black;"></i>
-              <input type="password" placeholder="senha" name="senha">
+              <input type="password" placeholder="senha" name="senha" required>
             </label>
             <button class="btn_login btn_login_second">Cadastrar</button>
           </form>
@@ -87,11 +86,11 @@
           <form class="formlogin" method="POST" action="{{url_for('autenticar')}}">
             <label class="label-input">
               <i class="bi bi-person icon-modify" style="font-size:1rem; color:black;"></i>
-              <input type="text" placeholder="login" name="usuario">
+              <input type="text" placeholder="login" name="usuario" required>
             </label>
             <label class="label-input">
               <i class="bi bi-lock icon-modify" style="font-size:1rem; color:black;"></i>
-              <input type="password" placeholder="senha" name="senha">
+              <input type="password" placeholder="senha" name="senha" required>
             </label>
             <a href="#" class="password">Esqueceu sua senha?</a>
             <button class="btn_login btn_login_second">Login</button>

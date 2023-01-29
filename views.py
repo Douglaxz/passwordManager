@@ -68,7 +68,7 @@ def autenticar():
             #return redirect('/')
             return redirect('/usuarioSenha')
         else:
-            flash('Usuário não logado com sucesso', 'danger')
+            flash('Verifique usuário e senha', 'danger')
             return redirect(url_for('login'))
     else:
         flash('Usuário não logado com sucesso','success')
@@ -174,6 +174,29 @@ def criarUsuario():
     db.session.commit()
     flash('Usuário criado com sucesso','success')
     return redirect(url_for('usuario'))
+
+# rota para criar usuário no banco de dados
+@app.route('/criarUsuarioexterno', methods=['POST',])
+def criarUsuarioexterno():    
+    nome  = request.form['nome']
+    status = 0
+    email = request.form['email']
+    localarroba = email.find("@")
+    login = email[0:localarroba]
+    tipousuario = 2
+    
+    #criptografar senha
+    senha = generate_password_hash(request.form['senha']).decode('utf-8')
+
+    usuario = tb_user.query.filter_by(name_user=nome).first()
+    if usuario:
+        flash ('Usuário já existe','danger')
+        return redirect(url_for('login')) 
+    novoUsuario = tb_user(name_user=nome, status_user=status, login_user=login, cod_usertype=tipousuario, password_user=senha, email_user=email)
+    db.session.add(novoUsuario)
+    db.session.commit()
+    flash('Usuário criado com sucesso, favor logar com ele','success')
+    return redirect(url_for('login'))    
 
 # rota para atualizar usuário no banco de dados
 @app.route('/atualizarUsuario', methods=['POST',])
@@ -488,7 +511,6 @@ def novoUsuarioSenha():
     form = FormularioUsuarioSenhaEdicao()
     return render_template('novoUsuarioSenha.html', titulo='Nova senha', form=form)
 
-
 # rota para criar tipo usuário no banco de dados
 @app.route('/criarUsuarioSenha', methods=['POST',])
 def criarUsuarioSenha():
@@ -500,7 +522,6 @@ def criarUsuarioSenha():
         flash('Por favor, preencha todos os dados','danger')
         return redirect(url_for('criarUsuarioSenha'))
     usuario  = form.usuario.data
-    
     #senha = form.senha.data
     senha = generate_password_hash(form.senha.data).decode('utf-8')
     tipo = form.tipo.data
@@ -583,18 +604,14 @@ def criarSenhaSegura():
         return redirect(url_for('login',proxima=url_for('novoSenhaSegura')))        
     form = FormularioSenhaEdicao(request.form)
     id = request.form['id']
-    caracteres = int(request.form['caracteres'])
-         
+    caracteres = int(request.form['caracteres'])        
     if not form.validate_on_submit():
         flash('Por favor, preencha todos os dados','danger')
         return redirect(url_for('novoSenhaSegura',id=id))
-
     if caracteres < 4 or caracteres > 10 :
         flash('Por favor selecione um número entre 4 e 10','danger')
         return redirect(url_for('novoSenhaSegura',id=id))
-    
     sugestaoSenha = geradorSenhaSegura(caracteres)
     form.caracteres.data = caracteres
     form.senha.data = sugestaoSenha
-    
     return render_template('novoSenhaSegura.html', titulo='Nova senha segura', form=form, id=id)
