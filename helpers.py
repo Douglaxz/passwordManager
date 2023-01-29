@@ -8,7 +8,7 @@ from wtforms import StringField, validators, SubmitField,IntegerField, SelectFie
 
 #criação via wftorm do formulario de usuarios
 class FormularPesquisa(FlaskForm):
-    pesquisa = StringField('Pesquisa:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    pesquisa = StringField('Pesquisa:', [validators.DataRequired(), validators.Length(min=1, max=50)],render_kw={"placeholder": "digite sua pesquisa"} )
     salvar = SubmitField('Pesquisar')
 
 ##------------------------------------------------------------------------------------------------------------------------------
@@ -17,11 +17,11 @@ class FormularPesquisa(FlaskForm):
 
 #criação via wftorm do formulario de usuarios
 class FormularioUsuario(FlaskForm):
-    nome = StringField('Nome:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    nome = StringField('Nome:', [validators.DataRequired(), validators.Length(min=1, max=50)],render_kw={"placeholder": "digite o nome do usuário"})
     status = SelectField('Situação:', coerce=int, choices=[(0,"Ativo"),(1,"Inativo")])
-    login = StringField('Login:', [validators.DataRequired(), validators.Length(min=1, max=50)])    
+    login = StringField('Login:', [validators.DataRequired(), validators.Length(min=1, max=50)],render_kw={"placeholder": "digite o login do usuário"})    
     tipousuario = SelectField('Situação:', coerce=int,  choices=[(g.cod_usertype, g.desc_usertype) for g in tb_usertype.query.order_by('desc_usertype')])
-    email = EmailField('Email:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    email = EmailField('Email:', [validators.DataRequired(), validators.Length(min=1, max=50)],render_kw={"placeholder": "digite o email do usuário"})
     salvar = SubmitField('Salvar')
 
 
@@ -36,9 +36,9 @@ class FormularioUsuarioVisualizar(FlaskForm):
 
 #criação via wftorm do formulario de usuarios
 class FormularioUsuarioTrocarSenha(FlaskForm):
-    senhaatual = PasswordField('Senha Atual:', [validators.DataRequired(), validators.Length(min=1, max=50)])
-    novasenha1 = PasswordField('Nova Senha:', [validators.DataRequired(), validators.Length(min=1, max=50)])
-    novasenha2 = PasswordField('Confirme Nova Senha:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    senhaatual = PasswordField('Senha Atual:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={"placeholder": "digite a senha atual"})
+    novasenha1 = PasswordField('Nova Senha:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={"placeholder": "digite a nova senha"})
+    novasenha2 = PasswordField('Confirme Nova Senha:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={"placeholder": "digite novamente a senha"})
     salvar = SubmitField('Editar')  
 
 #------------------------------------------------------------------------------------------------------------------------------
@@ -47,7 +47,7 @@ class FormularioUsuarioTrocarSenha(FlaskForm):
 
 #criação via wftorm do formulario de tipo usuarios
 class FormularioTipoUsuarioEdicao(FlaskForm):
-    descricao = StringField('Descrição:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    descricao = StringField('Descrição:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={"placeholder": "digite a descrição do tipo de usuário"})
     status = SelectField('Situação:', coerce=int, choices=[(0, 'Ativo'),(1, 'Inativo')])
     salvar = SubmitField('Salvar')    
 
@@ -63,9 +63,9 @@ class FormularioTipoUsuarioVisualizar(FlaskForm):
 
 #criação via wftorm do formulario de tipo usuarios
 class FormularioTipoSenhaEdicao(FlaskForm):
-    descricao = StringField('Descrição:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    descricao = StringField('Descrição:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={"placeholder": "digite a descrição do tipo de senha"})
     status = SelectField('Situação:', coerce=int, choices=[(0, 'Ativo'),(1, 'Inativo')])
-    icone = StringField('Icone:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    icone = StringField('Icone:', [validators.DataRequired(), validators.Length(min=1, max=50)],render_kw={"placeholder": "digite a figura do bootstrap icon que servirá de icone"})
     salvar = SubmitField('Salvar')    
 
 #criação via wftorm do formulario de tipo usuarios
@@ -81,8 +81,8 @@ class FormularioTipoSenhaVisualizar(FlaskForm):
 
 #criação via wftorm do formulario de tipo usuarios
 class FormularioUsuarioSenhaEdicao(FlaskForm):
-    usuario = StringField('Usuário:', [validators.DataRequired(), validators.Length(min=1, max=50)])
-    senha = StringField('Senha:', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    usuario = StringField('Usuário:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={"placeholder": "digite o usuário"})
+    senha = StringField('Senha:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={"placeholder": "digite a senha"})
     tipo = SelectField('Tipo:', coerce=int,  choices=[(g.cod_passwordtype, g.desc_passwordtype) for g in tb_passwordtype.query.order_by('desc_passwordtype')])
     salvar = SubmitField('Salvar')    
 
@@ -95,7 +95,7 @@ class FormularioUsuarioSenhaVisualizar(FlaskForm):
 
 #criação de senha forte
 class FormularioSenhaEdicao(FlaskForm):
-    caracteres = IntegerField('Quantidade de dígitos:', [validators.DataRequired()])
+    caracteres = IntegerField('Quantidade de dígitos:', [validators.DataRequired()], render_kw={"placeholder": "digite quantos caracteres a senha deverá ter"})
     senha = StringField('Senha:', render_kw={'readonly': True})
     salvar = SubmitField('Salvar') 
 
