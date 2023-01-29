@@ -18,10 +18,15 @@ from helpers import \
     FormularioTipoSenhaVisualizar,\
     FormularioUsuarioSenhaEdicao,\
     FormularioUsuarioSenhaVisualizar,\
-    FormularioUsuarioTrocarSenha
+    FormularioUsuarioTrocarSenha,\
+    FormularioSenhaEdicao
 # ITENS POR PÁGINA
 from config import ROWS_PER_PAGE, CHAVE
 from flask_bcrypt import generate_password_hash, Bcrypt, check_password_hash
+
+import string
+import random
+import numbers
 
 
  
@@ -554,12 +559,42 @@ def atualizarUsuarioSenha():
  #---------------------------------------------------------------------------------------------------------------------------------
 # GERADOR DE SENHA SEGURA
 #---------------------------------------------------------------------------------------------------------------------------------
-# rota para editar formulário tipo usuário 
-@app.route('/geradorSenhaSegura/<int:id>')
+# funcao gerar senha
 def geradorSenhaSegura(tamanho_da_senha):
-    caracteres = string.ascii_letters + string.digits + string.punctuation
-    senha_segura = ''
-    for i in range(tamanho_da_senha):
-        senha_segura += choice(caracteres)
-    print("A senha (segura) gerada é: ",senha_segura)
-    return senha_segura
+    # choose from all lowercase letter
+    letters = string.ascii_lowercase
+    result_str = ''.join(random.choice(letters) for i in range(tamanho_da_senha))
+    return(result_str)
+
+@app.route('/novoSenhaSegura/<int:id>')
+def novoSenhaSegura(id):
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        flash('Sessão expirou, favor logar novamente','danger')
+        return redirect(url_for('login',proxima=url_for('novoSenhaSegura')))  
+    form = FormularioSenhaEdicao()
+    return render_template('novoSenhaSegura.html', titulo='Nova senha segura', form=form, id=id)
+
+
+# rota para atualizar usuário no banco de dados
+@app.route('/criarSenhaSegura', methods=['POST',])
+def criarSenhaSegura():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        flash('Sessão expirou, favor logar novamente','danger')
+        return redirect(url_for('login',proxima=url_for('novoSenhaSegura')))        
+    form = FormularioSenhaEdicao(request.form)
+    id = request.form['id']
+    caracteres = int(request.form['caracteres'])
+         
+    if not form.validate_on_submit():
+        flash('Por favor, preencha todos os dados','danger')
+        return redirect(url_for('novoSenhaSegura',id=id))
+
+    if caracteres < 4 or caracteres > 10 :
+        flash('Por favor selecione um número entre 4 e 10','danger')
+        return redirect(url_for('novoSenhaSegura',id=id))
+    
+    sugestaoSenha = geradorSenhaSegura(caracteres)
+    form.caracteres.data = caracteres
+    form.senha.data = sugestaoSenha
+    
+    return render_template('novoSenhaSegura.html', titulo='Nova senha segura', form=form, id=id)

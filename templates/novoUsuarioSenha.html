@@ -22,6 +22,7 @@
     <div class="boxformulario bg-light p-2 text-dark bg-opacity-50">
       <fieldset>
         {{ form.csrf_token() }}
+        <input type="hidden" name="id" id="id" value="{{id}}">
         <div class="form-group">{{ form.usuario.label(class = 'form-label') }}
           {{ form.usuario(class = 'form-control') }}
         </div>
@@ -31,9 +32,7 @@
         <div class="form-group">{{ form.tipo.label(class = 'form-label') }}
           {{ form.tipo(class = 'form-control') }}
         </div>
-        
       </fieldset>
-      
     </div>
   </form>
 {% endblock %}

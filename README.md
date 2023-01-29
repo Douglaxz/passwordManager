@@ -38,7 +38,7 @@ Para começar, verifique a instalação dos seguintes itens:
 - [X] Funcionalidade senha
 - [X] Visualização por tipo de funcionário (Admnistrador/Usuário)
 - [X] Encriptar senha de acesso ao sistma
-- [ ] Gerar senhas inteligentes
+- [ ] Gerar senhas forte
 - [ ] Sugerir alteração da senha depois de algum tempo cadastrada (3 meses)
 - [ ] Placeholder dos formulários
 - [ ] Alerta dos formulários pelo wtrforms

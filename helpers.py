@@ -91,7 +91,16 @@ class FormularioUsuarioSenhaVisualizar(FlaskForm):
     usuario = StringField('Usuário:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={'readonly': True})
     senha = StringField('Senha:', [validators.DataRequired(), validators.Length(min=1, max=50)], render_kw={'readonly': True})
     tipo = SelectField('Tipo:', coerce=int, choices=[(g.cod_passwordtype, g.desc_passwordtype) for g in tb_passwordtype.query.order_by('desc_passwordtype')], render_kw={'readonly': True})
-    salvar = SubmitField('Salvar')  
+    salvar = SubmitField('Salvar') 
+
+#criação de senha forte
+class FormularioSenhaEdicao(FlaskForm):
+    caracteres = IntegerField('Quantidade de dígitos:', [validators.DataRequired()])
+    senha = StringField('Senha:', render_kw={'readonly': True})
+    salvar = SubmitField('Salvar') 
+
+
+
 #------------------------------------------------------------------------------------------------------------------------------
 # OUTROS
 #------------------------------------------------------------------------------------------------------------------------------
