@@ -268,23 +268,19 @@ def tipousuario():
         flash('Sessão expirou, favor logar novamente','danger')
         return redirect(url_for('login',proxima=url_for('tipousuario')))         
     page = request.args.get('page', 1, type=int)
-    form = FormularPesquisa()    
-    tiposusuario = tb_usertype.query.order_by(tb_usertype.desc_usertype)\
-    .paginate(page=page, per_page=ROWS_PER_PAGE , error_out=False)
+    form = FormularPesquisa()   
+    pesquisa = form.pesquisa.data
+    if pesquisa == "":
+        pesquisa = form.pesquisa_responsiva.data
+    
+    if pesquisa == "" or pesquisa == None:     
+        tiposusuario = tb_usertype.query.order_by(tb_usertype.desc_usertype)\
+        .paginate(page=page, per_page=ROWS_PER_PAGE , error_out=False)
+    else:
+        tiposusuario = tb_usertype.query.order_by(tb_usertype.desc_usertype)\
+        .filter(tb_usertype.desc_usertype.ilike(f'%{pesquisa}%'))\
+        .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)        
     return render_template('tipousuarios.html', titulo='Tipo Usuário', tiposusuario=tiposusuario, form=form)
-
-# rota index para mostrar pesquisa dos tipo usuários
-@app.route('/tipousuarioPesquisa', methods=['POST',])
-def tipousuarioPesquisa():
-    if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        flash('Sessão expirou, favor logar novamente','danger')
-        return redirect(url_for('login',proxima=url_for('tipousuarioPesquisa')))      
-    page = request.args.get('page', 1, type=int)
-    form = FormularPesquisa()
-    tiposusuario = tb_usertype.query.order_by(tb_usertype.desc_usertype)\
-    .filter(tb_usertype.desc_usertype.ilike(f'%{form.pesquisa.data}%'))\
-    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
-    return render_template('tipousuarios.html', titulo='Tipo Usuário' , tiposusuario=tiposusuario, form=form)    
 
 # rota para criar novo formulário usuário 
 @app.route('/novoTipoUsuario')
