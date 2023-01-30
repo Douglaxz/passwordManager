@@ -27,7 +27,24 @@
           {{ form.caracteres(class = 'form-control') }}</div>
         <div class="form-group">{{ form.senha.label(class = 'form-label') }}
           {{ form.senha(class = 'form-control') }}</div>
-      </fieldset>
+          <div class="form-group">Quais caracteres a senha deverá conter?
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="lower" name="lower" value="1" checked>
+          <label class="form-check-label" for="flexSwitchCheckDefault">letras mínusculas | abcdefghijklmnopqrstuvwxyz |</label>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="upper" name="upper" value="1" checked>
+          <label class="form-check-label" for="flexSwitchCheckDefault">letras maiúsculas | ABCDEFGHIJKLMNOPQRSTUVWXYZ |</label>
+        </div>  
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="numbers" name="numbers" value="1" checked>
+          <label class="form-check-label" for="flexSwitchCheckDefault">números | 0123456789 |</label>
+        </div>  
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" id="symbols" name="symbols" value="1" checked>
+          <label class="form-check-label" for="flexSwitchCheckDefault">símbolos | []{}()*;/,._- |</label>
+        </div>  
+    </fieldset>                                 
     </div>
   </form>
 {% endblock %}

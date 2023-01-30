@@ -573,10 +573,31 @@ def atualizarUsuarioSenha():
 # GERADOR DE SENHA SEGURA
 #---------------------------------------------------------------------------------------------------------------------------------
 # funcao gerar senha
-def geradorSenhaSegura(tamanho_da_senha):
-    # choose from all lowercase letter
-    letters = string.ascii_lowercase
-    result_str = ''.join(random.choice(letters) for i in range(tamanho_da_senha))
+def geradorSenhaSegura(tamanho_da_senha,t1,t2,t3,t4):
+    lower = "abcdefghijklmnopqrstuvwxyz"
+    upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    numbers = "0123456789"
+    symbols = "[]{}()*;/,._-"
+
+    all = ""
+    if(t1=='1'):
+        all = all + lower
+
+    if(t2=='1'):
+        all = all + upper
+
+    if(t3=='1'):
+        all = all + numbers
+
+    if(t4=='1'):
+        all = all + symbols
+
+    if(t1=='0' and t2=='0' and t3=='0' and t4=='0' ):
+        all = lower + upper + numbers + symbols
+
+    length = tamanho_da_senha
+    result_str = "".join(random.sample(all, length))
+
     return(result_str)
 
 @app.route('/novoSenhaSegura/<int:id>')
@@ -603,7 +624,28 @@ def criarSenhaSegura():
     if caracteres < 4 or caracteres > 10 :
         flash('Por favor selecione um número entre 4 e 10','danger')
         return redirect(url_for('novoSenhaSegura',id=id))
-    sugestaoSenha = geradorSenhaSegura(caracteres)
+    
+    if request.form.get('lower'):
+        lower = request.form['lower']
+    else:
+        lower = 0
+
+    if request.form.get('upper'):
+        upper = request.form['upper']
+    else:
+        upper = 0
+
+    if request.form.get('numbers'):
+        numbers = request.form['numbers']
+    else:
+        numbers = 0
+
+    if request.form.get('symbols'):
+        symbols = request.form['symbols']
+    else:
+        symbols = 0    
+    
+    sugestaoSenha = geradorSenhaSegura(caracteres,lower,upper,numbers,symbols)
     form.caracteres.data = caracteres
     form.senha.data = sugestaoSenha
     return render_template('novoSenhaSegura.html', titulo='Nova senha segura', form=form, id=id)

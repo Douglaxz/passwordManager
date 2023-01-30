@@ -3,7 +3,7 @@ import os
 from gerenciadorPassword import app, db
 from models import tb_user, tb_usertype, tb_passwordtype
 from flask_wtf import FlaskForm
-from wtforms import StringField, validators, SubmitField,IntegerField, SelectField,PasswordField,DateField,EmailField
+from wtforms import StringField, validators, SubmitField,IntegerField, SelectField,PasswordField,DateField,EmailField,BooleanField,RadioField
 
 
 #criação via wftorm do formulario de usuarios
@@ -96,9 +96,9 @@ class FormularioUsuarioSenhaVisualizar(FlaskForm):
 
 #criação de senha forte
 class FormularioSenhaEdicao(FlaskForm):
+    
     caracteres = IntegerField('Quantidade de dígitos:', [validators.DataRequired()], render_kw={"placeholder": "digite quantos caracteres a senha deverá ter"})
     senha = StringField('Senha:', render_kw={'readonly': True})
-    salvar = SubmitField('Salvar') 
 
 
 
