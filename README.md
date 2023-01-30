@@ -19,11 +19,11 @@ Para começar, verifique a instalação dos seguintes itens:
 - [X] Flask Bcrypt  - pip install flask-bcript
 - [X] Werkzeug - pip install Werkzeug
 
-# :hammer_and_wrench: Construído com:
+## :hammer_and_wrench: Construído com:
 - VsCode
 - Mysql WorkBench
 
-# :man_technologist: Tecnologias utilizadas:
+## :man_technologist: Tecnologias utilizadas:
 - <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
 - <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
 - <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" />
@@ -33,7 +33,7 @@ Para começar, verifique a instalação dos seguintes itens:
 - <img src="https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white" />
 
 
-# :memo: Checklist de funcionalidades - TODO LIST
+## :memo: Checklist de funcionalidades - TODO LIST
 - [X] Funcionalidade Login
 - [X] Funcionalidade Logout
 - [X] Funcionalidade template
@@ -50,21 +50,19 @@ Para começar, verifique a instalação dos seguintes itens:
 - [X] verificar problema de busca no modo responsivo
 
 
-# :paperclips: Colaborando:
+## :paperclips: Colaborando:
 - Rodrigo Freitas (@Rodjfreitas)- Dicas de frontend @rodrigo
 - Thiago Lima (@thiagoa-lima)- Dicas de estilo
 - Daiene Batagioti - Dica de melhor instalação da tag script do javascript
 
-# :pushpin: Versão:
+## :pushpin: Versão:
 - Versão: 1.0
 
-# :paperclips: Autor:
+## :paperclips: Autor:
 - Douglas Amaral
 
-# :black_nib: Licença:
+## :black_nib: Licença:
 - Este projeto está sob a licença educacional
 
-# :gift: Agradecimentos:
+## :gift: Agradecimentos:
 - Francieli Medeiros Moreira Amaral
-
-
