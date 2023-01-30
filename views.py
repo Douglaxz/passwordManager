@@ -80,7 +80,7 @@ def autenticar():
 #---------------------------------------------------------------------------------------------------------------------------------
 
 # rota index para mostrar os usuários
-@app.route('/usuario')
+@app.route('/usuario', methods=['POST','GET'])
 def usuario():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         flash('Sessão expirou, favor logar novamente','danger')
@@ -262,7 +262,7 @@ def trocarSenhaUsuario():
 #---------------------------------------------------------------------------------------------------------------------------------
 
 # rota index para mostrar os tipo usuários
-@app.route('/tipousuario')
+@app.route('/tipousuario', methods=['POST','GET'])
 def tipousuario():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         flash('Sessão expirou, favor logar novamente','danger')
@@ -364,29 +364,25 @@ def atualizarTipoUsuario():
 #TIPO DE SENHAS
 #---------------------------------------------------------------------------------------------------------------------------------
 # rota index para mostrar os tipos de senha
-@app.route('/tiposenha')
+@app.route('/tiposenha', methods=['POST','GET'])
 def tiposenha():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         flash('Sessão expirou, favor logar novamente','danger')
         return redirect(url_for('login',proxima=url_for('tiposenha')))      
     page = request.args.get('page', 1, type=int)
     form = FormularPesquisa()    
-    tipossenha = tb_passwordtype.query.order_by(tb_passwordtype.desc_passwordtype)\
-    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
+    pesquisa = form.pesquisa.data
+    if pesquisa == "":
+        pesquisa = form.pesquisa_responsiva.data
+    
+    if pesquisa == "" or pesquisa == None:
+        tipossenha = tb_passwordtype.query.order_by(tb_passwordtype.desc_passwordtype)\
+        .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
+    else:
+        tipossenha = tb_passwordtype.query.order_by(tb_passwordtype.desc_passwordtype)\
+        .filter(tb_passwordtype.desc_passwordtype.ilike(f'%{pesquisa}%'))\
+        .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)    
     return render_template('tiposenha.html', titulo='Tipo Senha', tipossenha=tipossenha, form=form)
-
-# rota index para pesquisar os beneficios
-@app.route('/tiposenhaPesquisa', methods=['POST',])
-def tipossenhaPesquisa():
-    if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        flash('Sessão expirou, favor logar novamente','danger')
-        return redirect(url_for('login',proxima=url_for('tipossenhaPesquisa')))          
-    page = request.args.get('page', 1, type=int)
-    form = FormularPesquisa()
-    tipossenha = tb_passwordtype.query.order_by(tb_passwordtype.desc_passwordtype)\
-    .filter(tb_passwordtype.desc_passwordtype.ilike(f'%{form.pesquisa.data}%'))\
-    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
-    return render_template('tiposenha.html', titulo='Tipo Senha' , tipossenha=tipossenha, form=form)
 
 # rota para criar novo formulário usuário 
 @app.route('/novoTipoSenha')
