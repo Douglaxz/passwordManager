@@ -1,9 +1,9 @@
- # Gerenciador de Senhas - # PasswordManager
+ # :computer: Gerenciador de Senhas - # PasswordManager
  Este projeto visa contemplar a funcionalidade de um gerenciador de senhas do usuário. com possibilidade de geração
  de senhas inteligentes
 
-# video
-[<img src="https://github.com/Douglaxz/passwordManager/blob/main/miniatura.png" width="50%">](https://www.youtube.com/watch?v=mebqnJYO2kM "Password Manager")
+# :video_camera: Amostra do projeto
+[<img src="https://github.com/Douglaxz/passwordManager/blob/main/miniatura.png" width="100%">](https://www.youtube.com/watch?v=mebqnJYO2kM "Password Manager")
 
 # :rocket: Começando:
 Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
