@@ -2,6 +2,8 @@
  Este projeto visa contemplar a funcionalidade de um gerenciador de senhas do usuário. com possibilidade de geração
  de senhas inteligentes
 
+#[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://youtu.be/mebqnJYO2kM)
+
 # :rocket: Começando:
 Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
 
