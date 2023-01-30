@@ -87,28 +87,26 @@ def usuario():
         return redirect(url_for('login',proxima=url_for('usuario')))        
     form = FormularPesquisa()
     page = request.args.get('page', 1, type=int)
-    usuarios = tb_user.query\
-    .join(tb_usertype, tb_usertype.cod_usertype==tb_user.cod_usertype)\
-    .add_columns(tb_user.login_user, tb_user.cod_user, tb_user.name_user, tb_user.status_user, tb_usertype.desc_usertype)\
-    .order_by(tb_user.name_user)\
-    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
-    return render_template('usuarios.html', titulo='Usuários', usuarios=usuarios, form=form)
+    pesquisa = form.pesquisa.data
+    if pesquisa == "":
+        pesquisa = form.pesquisa_responsiva.data
 
-# rota index para mostrar pesquisa usuários
-@app.route('/usuarioPesquisa', methods=['POST',])
-def usuarioPesquisa():
-    if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        flash('Sessão expirou, favor logar novamente','danger')
-        return redirect(url_for('login',proxima=url_for('usuarioPesquisa')))        
-    page = request.args.get('page', 1, type=int)
-    form = FormularPesquisa()
-    usuarios = tb_user.query\
-    .filter(tb_user.name_user.ilike(f'%{form.pesquisa.data}%'))\
-    .join(tb_usertype, tb_usertype.cod_usertype==tb_user.cod_usertype)\
-    .add_columns(tb_user.login_user, tb_user.cod_user, tb_user.name_user, tb_user.status_user, tb_usertype.desc_usertype)\
-    .order_by(tb_user.name_user)\
-    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
-    return render_template('usuarios.html', titulo='Usuários' , usuarios=usuarios, form=form)
+    if pesquisa == "" or pesquisa == None:    
+        usuarios = tb_user.query\
+        .join(tb_usertype, tb_usertype.cod_usertype==tb_user.cod_usertype)\
+        .add_columns(tb_user.login_user, tb_user.cod_user, tb_user.name_user, tb_user.status_user, tb_usertype.desc_usertype)\
+        .order_by(tb_user.name_user)\
+        .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
+    else:
+        usuarios = tb_user.query\
+        .filter(tb_user.name_user.ilike(f'%{pesquisa}%'))\
+        .join(tb_usertype, tb_usertype.cod_usertype==tb_user.cod_usertype)\
+        .add_columns(tb_user.login_user, tb_user.cod_user, tb_user.name_user, tb_user.status_user, tb_usertype.desc_usertype)\
+        .order_by(tb_user.name_user)\
+        .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
+
+
+    return render_template('usuarios.html', titulo='Usuários', usuarios=usuarios, form=form)
 
 # rota para criar novo formulário usuário 
 @app.route('/novoUsuario')
