@@ -3,7 +3,7 @@
  de senhas inteligentes
 
 # video
-[![Watch the video](https://www.youtube.com/watch?v=mebqnJYO2kM)
+[<img src="https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=Hc79sDi3f0U "Now in Android: 55")
 
 # :rocket: Começando:
 Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
