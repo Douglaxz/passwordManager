@@ -44,7 +44,7 @@ Para começar, verifique a instalação dos seguintes itens:
 - [X] Gerar senhas forte
 - [X] Placeholder dos formulários
 - [X] Cadastro de usuários pela tela principal
-- [ ] Sugerir alteração da senha depois de algum tempo cadastrada (3 meses)
+- [X] Sugerir alteração da senha depois de algum tempo cadastrada (3 meses)
 - [X] verificar problema de busca no modo responsivo
 
 
