@@ -1,8 +1,10 @@
- # :computer: Descrição do projeto: Gerenciador de Senhas - PasswordManager
+ # Gerenciador de Senhas - PasswordManager
+
+ ## :computer: Descrição do projeto: Gerenciador de Senhas - PasswordManager
  Este projeto visa contemplar a funcionalidade de um gerenciador de senhas do usuário. com possibilidade de geração
  de senhas inteligentes
 
-# :video_camera: Amostra do projeto:
+## :video_camera: Amostra do projeto:
 [<img src="https://github.com/Douglaxz/passwordManager/blob/main/miniatura.png" width="100%">](https://www.youtube.com/watch?v=mebqnJYO2kM "Password Manager")
 
 # :rocket: Começando:
