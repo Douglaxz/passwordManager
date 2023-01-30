@@ -2,26 +2,28 @@
 {% block conteudo %}
 <!-- barra de navegação para desktop/notebook -->
 <br>
-<form method="post" action="{{ url_for('usuarioSenhaPesquisa') }}" enctype="multipart/form-data" id="formulario">
+<form method="post" action="{{ url_for('usuarioSenha') }}" enctype="multipart/form-data" id="formulario">
   <div class="boxtitulocombusca bg-dark align-items-center">
     <div class="p-2 bd-highlight col-lg text-left text-white font-weight-bold "><i class="bi-key" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Usuários"></i> {{ titulo }}</div>
-    <div class="container w-25 input-group">{{form.pesquisa(class="form-control")}}</div>    
+    <div class="container w-25 input-group">{{form.pesquisa(class="form-control")}}</div>
     <div class="p-2"><a class="btn btn-warning" href="#" onclick="myFunction()"><i class="bi bi-search" style="font-size:1.5rem; color:white;"></i></a></div>
     <div class="p-2"><a class="btn btn-danger" href="{{url_for('usuarioSenha')}}"><i class="bi bi-eraser" style="font-size:1.5rem; color:white;"></i></a></div>
     <div class="p-2"><a class="btn btn-success" href="{{url_for('novoUsuarioSenha')}}"><i class="bi bi-file-earmark-plus" style="font-size:1.5rem; color:white;"></i></a></div>
   </div>
+
   <!-- barra de navegação para mobile -->
+
   <div class="bg-dark align-items-center boxtitulocombusca_responsivo">
     <div class="p-2 bd-highlight col-lg text-left text-white font-weight-bold "><i class="bi-key" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Usuários"></i> {{ titulo }}</div>
-    <div class="container input-group">{{form.pesquisa(class="form-control")}}</div>    
+    <div class="container input-group">{{form.pesquisa_responsiva(class="form-control")}}</div>
     <div class="p-2 align-items-center"><a class="btn btn-warning" href="#" onclick="myFunction()"><i class="bi bi-search" style="font-size:1.5rem; color:white;"></i></a>
     <a class="btn btn-danger" href="{{url_for('usuarioSenha')}}"><i class="bi bi-eraser" style="font-size:1.5rem; color:white;"></i></a>
     <a class="btn btn-success" href="{{url_for('novoUsuarioSenha')}}"><i class="bi bi-file-earmark-plus" style="font-size:1.5rem; color:white;"></i></a></div>
   </div>
 </form>
+
 <!-- mostrar dados -->
 <div class="boxcentral bg-light text-dark bg-opacity-50 cards__lista">
-  
   {% for usuariosenha in usuariosenhas.items %}
   <div class="card d-inline-block cards__lista">
     <div class="card__imagem">

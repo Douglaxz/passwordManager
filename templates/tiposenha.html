@@ -10,7 +10,9 @@
     <div class="p-2"><a class="btn btn-danger" href="{{url_for('tiposenha')}}"><i class="bi bi-eraser" style="font-size:1.5rem; color:white;"></i></a></div>
     <div class="p-2"><a class="btn btn-success" href="{{url_for('novoTipoSenha')}}"><i class="bi bi-file-earmark-plus" style="font-size:1.5rem; color:white;"></i></a></div>
   </div>
+</form>
   <!-- barra de navegação para mobile -->
+<form method="post" action="{{ url_for('tipossenhaPesquisa') }}" enctype="multipart/form-data" id="formulario">
   <div class="bg-dark align-items-center boxtitulocombusca_responsivo">
     <div class="p-2 bd-highlight col-lg text-left text-white font-weight-bold "><i class="bi-card-list" style="font-size:2rem; color:white;" data-toggle="tooltip" data-placement="right" title="Usuários"></i> {{ titulo }}</div>
     <div class="container input-group">{{form.pesquisa(class="form-control")}}</div>    

@@ -470,37 +470,35 @@ def atualizarTipoSenha():
 # USUARIO SENHA
 #---------------------------------------------------------------------------------------------------------------------------------
 # rota index para mostrar as senhas do
-@app.route('/usuarioSenha')
+@app.route('/usuarioSenha', methods=['POST','GET'])
 def usuarioSenha():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         flash('Sessão expirou, favor logar novamente','danger')
         return redirect(url_for('login',proxima=url_for('usuarioSenha')))      
     page = request.args.get('page', 1, type=int)
-    form = FormularPesquisa()    
-    usuariosenhas = tb_userpassword.query.order_by(tb_userpassword.date_userpassword)\
-    .join(tb_passwordtype, tb_passwordtype.cod_passwordtype==tb_userpassword.cod_passwordtype)\
-    .add_columns(tb_passwordtype.icon_passwordtype, tb_passwordtype.desc_passwordtype, tb_userpassword.cod_userpassword, tb_userpassword.username_userpassword)\
-    .filter(tb_userpassword.cod_user==session['coduser_logado'])\
-    .order_by(tb_userpassword.date_userpassword)\
-    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
+    form = FormularPesquisa()
+    pesquisa = form.pesquisa.data
+    if pesquisa == "":
+        pesquisa = form.pesquisa_responsiva.data
+    
+    if pesquisa == "" or pesquisa == None:
+        usuariosenhas = tb_userpassword.query.order_by(tb_userpassword.date_userpassword)\
+        .join(tb_passwordtype, tb_passwordtype.cod_passwordtype==tb_userpassword.cod_passwordtype)\
+        .add_columns(tb_passwordtype.icon_passwordtype, tb_passwordtype.desc_passwordtype, tb_userpassword.cod_userpassword, tb_userpassword.username_userpassword)\
+        .filter(tb_userpassword.cod_user==session['coduser_logado'])\
+        .order_by(tb_userpassword.date_userpassword)\
+        .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
+    else:
+        usuariosenhas = tb_userpassword.query\
+        .join(tb_passwordtype, tb_passwordtype.cod_passwordtype==tb_userpassword.cod_passwordtype)\
+        .add_columns(tb_passwordtype.icon_passwordtype, tb_passwordtype.desc_passwordtype, tb_userpassword.cod_userpassword, tb_userpassword.username_userpassword)\
+        .filter(tb_userpassword.cod_user==session['coduser_logado'])\
+        .filter(tb_passwordtype.desc_passwordtype.ilike(f'%{pesquisa}%'))\
+        .order_by(tb_userpassword.date_userpassword)\
+        .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
+
     return render_template('usuariosenhas.html', titulo='Senha', usuariosenhas=usuariosenhas, form=form)
 
-# rota index para pesquisar os beneficios
-@app.route('/usuarioSenhaPesquisa', methods=['POST',])
-def usuarioSenhaPesquisa():
-    if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        flash('Sessão expirou, favor logar novamente','danger')
-        return redirect(url_for('login',proxima=url_for('usuarioSenhaPesquisa')))    
-    page = request.args.get('page', 1, type=int)
-    form = FormularPesquisa()
-    usuariosenhas = tb_userpassword.query\
-    .join(tb_passwordtype, tb_passwordtype.cod_passwordtype==tb_userpassword.cod_passwordtype)\
-    .add_columns(tb_passwordtype.icon_passwordtype, tb_passwordtype.desc_passwordtype, tb_userpassword.cod_userpassword, tb_userpassword.username_userpassword)\
-    .filter(tb_userpassword.cod_user==session['coduser_logado'])\
-    .filter(tb_passwordtype.desc_passwordtype.ilike(f'%{form.pesquisa.data}%'))\
-    .order_by(tb_userpassword.date_userpassword)\
-    .paginate(page=page, per_page=ROWS_PER_PAGE, error_out=False)
-    return render_template('usuariosenhas.html', titulo='Senha' , usuariosenhas=usuariosenhas, form=form)
 
 # rota para criar formulário de criação de senha
 @app.route('/novoUsuarioSenha')

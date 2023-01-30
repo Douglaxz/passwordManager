@@ -8,7 +8,8 @@ from wtforms import StringField, validators, SubmitField,IntegerField, SelectFie
 
 #criação via wftorm do formulario de usuarios
 class FormularPesquisa(FlaskForm):
-    pesquisa = StringField('Pesquisa:', [validators.DataRequired(), validators.Length(min=1, max=50)],render_kw={"placeholder": "digite sua pesquisa"} )
+    pesquisa = StringField('Pesquisa:', [validators.Length(min=1, max=50)],render_kw={"placeholder": "digite sua pesquisa"} )
+    pesquisa_responsiva = StringField('Pesquisa:', [validators.Length(min=1, max=50)],render_kw={"placeholder": "digite sua pesquisa"} )
     salvar = SubmitField('Pesquisar')
 
 ##------------------------------------------------------------------------------------------------------------------------------
