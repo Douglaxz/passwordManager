@@ -1,4 +1,4 @@
- # :computer: Descrição do projeto: Gerenciador de Senhas - # PasswordManager
+ # :computer: Descrição do projeto: Gerenciador de Senhas - PasswordManager
  Este projeto visa contemplar a funcionalidade de um gerenciador de senhas do usuário. com possibilidade de geração
  de senhas inteligentes
 
