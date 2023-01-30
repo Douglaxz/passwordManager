@@ -42,7 +42,7 @@ Para começar, verifique a instalação dos seguintes itens:
 - [X] Placeholder dos formulários
 - [X] Cadastro de usuários pela tela principal
 - [ ] Sugerir alteração da senha depois de algum tempo cadastrada (3 meses)
-- [ ] verificar problema de busca no modo responsivo
+- [X] verificar problema de busca no modo responsivo
 
 
 # :paperclips: Colaborando:
