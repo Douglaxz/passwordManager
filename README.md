@@ -7,10 +7,10 @@
 ## :video_camera: Amostra do projeto:
 [<img src="https://github.com/Douglaxz/passwordManager/blob/main/miniatura.png" width="100%">](https://www.youtube.com/watch?v=mebqnJYO2kM "Password Manager")
 
-# :rocket: Começando:
+## :rocket: Começando:
 Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
 
-# :wrench: Pré-requisitos e instalações:
+## :wrench: Pré-requisitos e instalações:
 Para começar, verifique a instalação dos seguintes itens:
 - [X] Python 
 - [X] Flask
